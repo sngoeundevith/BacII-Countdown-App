@@ -77,12 +77,12 @@
         <!-- Top Navigation Header -->
         <header class="flex flex-wrap justify-between items-center gap-3 w-full">
             <div class="flex items-center space-x-3 bg-slate-900/80 backdrop-blur-md px-4 py-2.5 rounded-full border border-amber-500/30 shadow-lg">
-                <i class="fa-solid fa-hourglass-half text-amber-400 animate-pulse text-lg"></i>
-                <span class="font-bold text-sm md:text-base tracking-wide text-amber-300">BacII Countdown App</span>
+                <img id="headerLogo" src="https://drive.google.com/file/d/1v6fAyTkZXRZzUR1bXcjHgoBlN3yrVp3K/view?usp=drive_link" alt="Logo" class="w-6 h-6 object-contain rounded-full bg-amber-400/20 p-0.5">
+                <span class="font-bold text-sm md:text-base tracking-wide text-amber-300">វិទ្យាល័យសម្ដេចក្រឡាហោម ស ខេង តាគ្រាម</span>
             </div>
             
             <div class="flex items-center gap-2">
-                <!-- PWA Install Button (Hidden by default until prompt is ready) -->
+                <!-- PWA Install Button -->
                 <button id="installAppBtn" class="bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-400 hover:to-amber-500 text-slate-950 font-bold px-4 py-2.5 rounded-full flex items-center gap-2 text-sm shadow-lg hover:scale-105 active:scale-95 transition-all hidden">
                     <i class="fa-solid fa-download"></i>
                     <span>ដំឡើង App</span>
@@ -234,7 +234,7 @@
                         <i class="fa-solid fa-calendar-days"></i> ១. កំណត់កាលបរិច្ឆេទ Countdown
                     </h4>
                     <div>
-                        <label class="block text-xs text-slate-300 mb-1">ឈ្មោះព្រឹត្តិការណ៍ / Event Title</label>
+                        <label class="block text-xs text-slate-300 mb-1">ឈ្មោះព្រឹត្តិការណ៍</label>
                         <input type="text" id="inputTitle" required class="w-full bg-slate-800 border border-slate-700 rounded-xl px-4 py-2.5 text-white text-sm focus:outline-none focus:border-amber-400">
                     </div>
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
@@ -249,23 +249,37 @@
                     </div>
                 </div>
 
-                <!-- Section 2: External Link System -->
+                <!-- Section 2: School Logo Customization -->
                 <div class="bg-slate-800/40 p-4 rounded-2xl border border-slate-700/50 space-y-3">
                     <h4 class="text-amber-300 font-bold text-sm flex items-center gap-2">
-                        <i class="fa-solid fa-link"></i> ២. តំណភ្ជាប់ "ប្រព័ន្ធគ្រប់គ្រងពិន្ទុ"
+                        <i class="fa-solid fa-school"></i> ២. Logo សាលា
+                    </h4>
+                    <div class="flex gap-2">
+                        <input type="url" id="inputSchoolLogo" placeholder="បញ្ចូល Link Logo សាលា (URL)" class="w-full bg-slate-800 border border-slate-700 rounded-xl px-3 py-2 text-xs text-white focus:outline-none focus:border-amber-400">
+                    </div>
+                    <div class="border-2 border-dashed border-slate-700 hover:border-amber-400/50 rounded-2xl p-3 text-center cursor-pointer bg-slate-800/50 hover:bg-slate-800 transition-all" onclick="document.getElementById('schoolLogoFileInput').click()">
+                        <i class="fa-solid fa-cloud-arrow-up text-xl text-amber-400 mb-1"></i>
+                        <p class="text-xs text-slate-300">ឬចុចទីនេះដើម្បី Upload Logo សាលាពីកុំព្យូទ័រ</p>
+                    </div>
+                    <input type="file" id="schoolLogoFileInput" accept="image/*" class="hidden">
+                </div>
+
+                <!-- Section 3: External Link System -->
+                <div class="bg-slate-800/40 p-4 rounded-2xl border border-slate-700/50 space-y-3">
+                    <h4 class="text-amber-300 font-bold text-sm flex items-center gap-2">
+                        <i class="fa-solid fa-link"></i> ៣. តំណភ្ជាប់ "ប្រព័ន្ធគ្រប់គ្រងពិន្ទុ"
                     </h4>
                     <div>
                         <input type="url" id="inputSystemUrl" placeholder="https://example.com/scores" class="w-full bg-slate-800 border border-slate-700 rounded-xl px-4 py-2.5 text-white text-sm focus:outline-none focus:border-amber-400">
                     </div>
                 </div>
 
-                <!-- Section 3: Background Images Upload / URL -->
+                <!-- Section 4: Background Images Upload / URL -->
                 <div class="bg-slate-800/40 p-4 rounded-2xl border border-slate-700/50 space-y-3">
                     <h4 class="text-amber-300 font-bold text-sm flex items-center gap-2">
-                        <i class="fa-solid fa-image"></i> ៣. រូបថត Background (รองรับ GIF & រូបភាពមានចលនា)
+                        <i class="fa-solid fa-image"></i> ៤. រូបថត Background (รองรับ GIF & រូបភាពមានចលនា)
                     </h4>
                     
-                    <!-- Add Image via Direct URL -->
                     <div class="flex gap-2">
                         <input type="url" id="inputBgUrl" placeholder="បញ្ចូល Link រូបភាព ឬ GIF (ឧ៖ https://.../image.gif)" class="w-full bg-slate-800 border border-slate-700 rounded-xl px-3 py-2 text-xs text-white focus:outline-none focus:border-amber-400">
                         <button type="button" id="addBgUrlBtn" class="bg-amber-400/20 hover:bg-amber-400/30 text-amber-300 text-xs px-4 py-2 rounded-xl border border-amber-400/30 font-semibold flex-shrink-0">
@@ -281,11 +295,11 @@
                     <div id="thumbContainer" class="grid grid-cols-4 gap-2 mt-2 max-h-28 overflow-y-auto"></div>
                 </div>
 
-                <!-- Section 4: Announcements Management -->
+                <!-- Section 5: Announcements Management -->
                 <div class="bg-slate-800/40 p-4 rounded-2xl border border-slate-700/50 space-y-3">
                     <div class="flex justify-between items-center">
                         <h4 class="text-amber-300 font-bold text-sm flex items-center gap-2">
-                            <i class="fa-solid fa-bullhorn"></i> ៤. គ្រប់គ្រងសារជូនដំណឹងដល់សិស្ស
+                            <i class="fa-solid fa-bullhorn"></i> ៥. គ្រប់គ្រងសារជូនដំណឹងដល់សិស្ស
                         </h4>
                         <button type="button" id="addAnnouncementBtn" class="bg-amber-400/25 hover:bg-amber-400/40 text-amber-300 text-xs px-3 py-1.5 rounded-lg border border-amber-400/30 flex items-center gap-1 font-semibold">
                             <i class="fa-solid fa-plus"></i> បន្ថែមសារថ្មី
@@ -294,10 +308,10 @@
                     <div id="announcementEditorList" class="space-y-3 max-h-60 overflow-y-auto pr-1"></div>
                 </div>
 
-                <!-- Section 5: Password Change -->
+                <!-- Section 6: Password Change -->
                 <div class="bg-slate-800/40 p-4 rounded-2xl border border-slate-700/50 space-y-3">
                     <h4 class="text-amber-300 font-bold text-sm flex items-center gap-2">
-                        <i class="fa-solid fa-key"></i> ៥. ប្ដូរលេខកូដសម្ងាត់ការកំណត់
+                        <i class="fa-solid fa-key"></i> ៦. ប្ដូរលេខកូដសម្ងាត់ការកំណត់
                     </h4>
                     <div>
                         <input type="password" id="inputNewPassword" placeholder="លេខកូដសម្ងាត់ថ្មី (ទុកទទេបើមិនចង់ប្ដូរ)" class="w-full bg-slate-800 border border-slate-700 rounded-xl px-4 py-2.5 text-white text-sm focus:outline-none focus:border-amber-400">
@@ -317,9 +331,9 @@
         </div>
     </div>
 
-    <!-- JAVASCRIPT LOGIC & PWA REGISTRATION -->
+    <!-- JAVASCRIPT LOGIC & PWA DYNAMIC REGISTRATION -->
     <script>
-        // --- PWA DYNAMIC MANIFEST & SERVICE WORKER ---
+        // --- PWA SERVICE WORKER ---
         if ('serviceWorker' in navigator) {
             const swCode = `
                 self.addEventListener('install', (e) => { self.skipWaiting(); });
@@ -330,28 +344,6 @@
             const swUrl = URL.createObjectURL(swBlob);
             navigator.serviceWorker.register(swUrl).catch(err => console.log('SW registration failed', err));
         }
-
-        // Dynamic Manifest for App Install
-        const manifestData = {
-            "name": "BacII Countdown App",
-            "short_name": "Countdown",
-            "start_url": "./index.html",
-            "display": "standalone",
-            "background_color": "#090d16",
-            "theme_color": "#f59e0b",
-            "icons": [
-                {
-                    "src": "https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/svgs/solid/hourglass-half.svg",
-                    "sizes": "192x192 512x512",
-                    "type": "image/svg+xml"
-                }
-            ]
-        };
-        const manifestBlob = new Blob([JSON.stringify(manifestData)], { type: 'application/json' });
-        const manifestLink = document.createElement('link');
-        manifestLink.rel = 'manifest';
-        manifestLink.href = URL.createObjectURL(manifestBlob);
-        document.head.appendChild(manifestLink);
 
         let deferredPrompt;
         const installAppBtn = document.getElementById('installAppBtn');
@@ -372,7 +364,7 @@
             }
         });
 
-        // --- APP LOGIC ---
+        // --- APP LOGIC & DYNAMIC MANIFEST ---
         const KHMER_DIGITS = ['០', '១', '២', '៣', '៤', '៥', '៦', '៧', '៨', '៩'];
         const KHMER_DAYS = ['អាទិត្យ', 'ចន្ទ', 'អង្គារ', 'ពុធ', 'ព្រហស្បតិ៍', 'សុក្រ', 'សៅរ៍'];
         const KHMER_MONTHS = ['មករា', 'កុម្ភៈ', 'មីនា', 'មេសា', 'ឧសភា', 'មិថុនា', 'កក្កដា', 'សីហា', 'កញ្ញា', 'តុលា', 'វិច្ឆិកា', 'ធ្នូ'];
@@ -402,6 +394,7 @@
         const DEFAULT_TITLE = "ថ្ងៃប្រឡងបាក់ឌុប ១០ សីហា ២០២៧";
         const DEFAULT_DATE = "2027-08-10T00:00";
         const DEFAULT_BG = "https://images.unsplash.com/photo-1519681393784-d120267933ba?q=80&w=1920&auto=format&fit=crop";
+        const DEFAULT_LOGO = "https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/svgs/solid/hourglass-half.svg";
         const DEFAULT_PASSWORD = "1234";
         const DEFAULT_SYSTEM_URL = "https://google.com";
 
@@ -424,6 +417,7 @@
             title: DEFAULT_TITLE,
             targetDateTime: DEFAULT_DATE,
             photos: [DEFAULT_BG],
+            schoolLogo: DEFAULT_LOGO,
             password: DEFAULT_PASSWORD,
             systemUrl: DEFAULT_SYSTEM_URL,
             announcements: DEFAULT_ANNOUNCEMENTS
@@ -439,6 +433,7 @@
         const hoursEl = document.getElementById('hours');
         const minutesEl = document.getElementById('minutes');
         const secondsEl = document.getElementById('seconds');
+        const headerLogo = document.getElementById('headerLogo');
         
         const settingsModal = document.getElementById('settingsModal');
         const passwordModal = document.getElementById('passwordModal');
@@ -457,6 +452,8 @@
         const inputTitle = document.getElementById('inputTitle');
         const inputDate = document.getElementById('inputDate');
         const inputTime = document.getElementById('inputTime');
+        const inputSchoolLogo = document.getElementById('inputSchoolLogo');
+        const schoolLogoFileInput = document.getElementById('schoolLogoFileInput');
         const inputSystemUrl = document.getElementById('inputSystemUrl');
         const inputNewPassword = document.getElementById('inputNewPassword');
         const photoInput = document.getElementById('photoInput');
@@ -497,12 +494,41 @@
             localStorage.setItem('countdown_config', JSON.stringify(config));
         }
 
+        function updateManifest() {
+            const existingManifest = document.getElementById('pwaManifest');
+            if (existingManifest) existingManifest.remove();
+
+            const manifestData = {
+                "name": "BacII Countdown App",
+                "short_name": "Countdown",
+                "start_url": "./index.html",
+                "display": "standalone",
+                "background_color": "#090d16",
+                "theme_color": "#f59e0b",
+                "icons": [
+                    {
+                        "src": config.schoolLogo || DEFAULT_LOGO,
+                        "sizes": "192x192 512x512",
+                        "type": "image/png"
+                    }
+                ]
+            };
+            const manifestBlob = new Blob([JSON.stringify(manifestData)], { type: 'application/json' });
+            const manifestLink = document.createElement('link');
+            manifestLink.id = 'pwaManifest';
+            manifestLink.rel = 'manifest';
+            manifestLink.href = URL.createObjectURL(manifestBlob);
+            document.head.appendChild(manifestLink);
+        }
+
         function updateUI() {
             displayTitle.textContent = config.title;
             const targetDate = new Date(config.targetDateTime);
             targetDateSubtitle.textContent = `កាលបរិច្ឆេទកំណត់៖ ${formatKhmerDate(targetDate)}`;
             systemLinkBtn.href = config.systemUrl || '#';
+            headerLogo.src = config.schoolLogo || DEFAULT_LOGO;
 
+            updateManifest();
             currentSlideIndex = 0;
             updateSlideshow();
             startCountdown();
@@ -660,6 +686,7 @@
             
             inputDate.value = dateStr;
             inputTime.value = `${hours}:${minutes}`;
+            inputSchoolLogo.value = (config.schoolLogo && !config.schoolLogo.startsWith('data:')) ? config.schoolLogo : '';
             inputSystemUrl.value = config.systemUrl || '';
             inputNewPassword.value = '';
 
@@ -698,6 +725,18 @@
                 thumbContainer.appendChild(wrapper);
             });
         }
+
+        schoolLogoFileInput.addEventListener('change', (e) => {
+            const file = e.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = (event) => {
+                    config.schoolLogo = event.target.result;
+                    inputSchoolLogo.value = '';
+                };
+                reader.readAsDataURL(file);
+            }
+        });
 
         addBgUrlBtn.addEventListener('click', () => {
             const url = inputBgUrl.value.trim();
@@ -797,6 +836,10 @@
             config.targetDateTime = `${inputDate.value}T${inputTime.value}`;
             config.systemUrl = inputSystemUrl.value;
 
+            if (inputSchoolLogo.value.trim() !== '') {
+                config.schoolLogo = inputSchoolLogo.value.trim();
+            }
+
             if (inputNewPassword.value.trim() !== '') {
                 config.password = inputNewPassword.value.trim();
             }
@@ -811,6 +854,7 @@
                 title: DEFAULT_TITLE,
                 targetDateTime: DEFAULT_DATE,
                 photos: [DEFAULT_BG],
+                schoolLogo: DEFAULT_LOGO,
                 password: DEFAULT_PASSWORD,
                 systemUrl: DEFAULT_SYSTEM_URL,
                 announcements: DEFAULT_ANNOUNCEMENTS
