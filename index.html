@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>កម្មវិធី Countdown កាលបរិច្ឆេទ</title>
+    <title>Takream</title>
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- Google Fonts -->
@@ -50,7 +50,7 @@
         <header class="flex flex-wrap justify-between items-center gap-3 w-full">
             <div class="flex items-center space-x-3 bg-slate-900/80 backdrop-blur-md px-4 py-2.5 rounded-full border border-amber-500/30 shadow-lg">
                 <img id="headerLogo" src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/svgs/solid/hourglass-half.svg" alt="Logo" class="w-6 h-6 object-contain rounded-full bg-amber-400/20 p-0.5">
-                <span class="font-bold text-sm md:text-base tracking-wide text-amber-300">BacII Countdown App</span>
+                <span class="font-bold text-sm md:text-base tracking-wide text-amber-300">វិទ្យាល័យសម្ដេចក្រឡាហោម ស ខេង តាគ្រាម</span>
             </div>
             
             <div class="flex items-center gap-2">
@@ -230,7 +230,6 @@
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
         import { getFirestore, doc, setDoc, onSnapshot } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
 
-        // TODO: ជំនួសព័ត៌មាន Firebase របស់អ្នកនៅទីនេះ
         const firebaseConfig = {
             apiKey: "AIzaSyD6U01ENfwYI4-2yqrRrFjpo-470sEhOtw",
             authDomain: "bacii-countdown.firebaseapp.com",
@@ -239,7 +238,7 @@
             messagingSenderId: "788227235069",
             appId: "1:788227235069:web:55e04629c67268e7967294",
             measurementId: "G-JYFZED4QY7"
-          };
+        };
 
         const app = initializeApp(firebaseConfig);
         const db = getFirestore(app);
@@ -287,14 +286,6 @@
             if (docSnap.exists()) {
                 config = { ...DEFAULT_CONFIG, ...docSnap.data() };
                 updateUI();
-                
-                // Show notification if app is active or in background
-                if (Notification.permission === "granted") {
-                    new Notification("មានការអាប់ដេតថ្មី! 📢", {
-                        body: config.title,
-                        icon: config.schoolLogo
-                    });
-                }
             } else {
                 setDoc(docRef, DEFAULT_CONFIG);
             }
@@ -503,12 +494,16 @@
                 box.innerHTML = `
                     <div class="flex justify-between items-center mb-1">
                         <span class="text-xs font-bold text-amber-400">សារទី ${toKhmerNum(index + 1)}</span>
-                        <button type="button" class="text-red-400 text-xs"><i class="fa-solid fa-trash"></i> លុប</button>
+                        <button type="button" class="text-red-400 text-xs delete-announcement-btn"><i class="fa-solid fa-trash"></i> លុប</button>
                     </div>
-                    <input type="text" value="${item.title || ''}" placeholder="ចំណងជើង" class="w-full bg-slate-800 border border-slate-700 rounded-lg px-3 py-1.5 text-xs text-white" onchange="config.announcements[${index}].title=this.value">
-                    <textarea placeholder="ខ្លឹមសារ" class="w-full bg-slate-800 border border-slate-700 rounded-lg px-3 py-1.5 text-xs text-white h-14" onchange="config.announcements[${index}].desc=this.value">${item.desc || ''}</textarea>
-                    <input type="text" value="${item.image || ''}" placeholder="Image URL" class="w-full bg-slate-800 border border-slate-700 rounded-lg px-3 py-1.5 text-xs text-white" onchange="config.announcements[${index}].image=this.value">`;
-                box.querySelector('button').onclick = () => { config.announcements.splice(index, 1); renderAnnouncementEditors(); };
+                    <input type="text" value="${item.title || ''}" placeholder="ចំណងជើង" class="w-full bg-slate-800 border border-slate-700 rounded-lg px-3 py-1.5 text-xs text-white ann-title" data-index="${index}">
+                    <textarea placeholder="ខ្លឹមសារ" class="w-full bg-slate-800 border border-slate-700 rounded-lg px-3 py-1.5 text-xs text-white h-14 ann-desc" data-index="${index}">${item.desc || ''}</textarea>
+                    <input type="text" value="${item.image || ''}" placeholder="Image URL" class="w-full bg-slate-800 border border-slate-700 rounded-lg px-3 py-1.5 text-xs text-white ann-img" data-index="${index}">`;
+                
+                box.querySelector('.delete-announcement-btn').onclick = () => {
+                    config.announcements.splice(index, 1);
+                    renderAnnouncementEditors();
+                };
                 list.appendChild(box);
             });
         }
@@ -524,12 +519,35 @@
             config.title = document.getElementById('inputTitle').value;
             config.targetDateTime = `${document.getElementById('inputDate').value}T${document.getElementById('inputTime').value}`;
             config.systemUrl = document.getElementById('inputSystemUrl').value;
-            const logo = document.getElementById('inputSchoolLogo').value.trim();
-            if (logo) config.schoolLogo = logo;
-            const pass = document.getElementById('inputNewPassword').value.trim();
-            if (pass) config.password = pass;
+            
+            // Collect updated announcement values from DOM inputs directly
+            const titles = document.querySelectorAll('.ann-title');
+            const descs = document.querySelectorAll('.ann-desc');
+            const imgs = document.querySelectorAll('.ann-img');
+            
+            if (titles.length > 0) {
+                config.announcements = [];
+                for (let i = 0; i < titles.length; i++) {
+                    config.announcements.push({
+                        id: Date.now() + i,
+                        title: titles[i].value,
+                        desc: descs[i].value,
+                        image: imgs[i].value
+                    });
+                }
+            }
 
-            // Save to Firebase Firestore (Triggers Real-Time update to all students instantly!)
+            const logo = document.getElementById('inputSchoolLogo').value.trim();
+            if (logo !== "") {
+                config.schoolLogo = logo;
+            }
+
+            const pass = document.getElementById('inputNewPassword').value.trim();
+            if (pass !== "") {
+                config.password = pass;
+            }
+
+            // Save to Firebase Firestore
             try {
                 await setDoc(docRef, config);
                 alert("រក្សាទុកនិងធ្វើបច្ចុប្បន្នភាព Real-Time ដោយជោគជ័យ!");
