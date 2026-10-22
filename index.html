@@ -65,9 +65,9 @@
 </head>
 <body class="bg-slate-950 text-white min-h-screen overflow-x-hidden select-none">
 
-    <!-- LIVE UPDATE TOAST ALERT CONTAINER -->
+    <!-- LIVE UPDATE TOAST ALERT BANNER (Guaranteed to show on Dashboard) -->
     <div id="toastContainer" class="fixed top-5 left-1/2 transform -translate-x-1/2 z-50 w-11/12 max-w-md hidden">
-        <div class="glass-panel bg-slate-900/90 border-2 border-amber-400 p-4 rounded-2xl shadow-2xl flex items-start gap-3 animate-toast">
+        <div class="glass-panel bg-slate-900/95 border-2 border-amber-400 p-4 rounded-2xl shadow-2xl flex items-start gap-3 animate-toast">
             <div class="w-10 h-10 bg-amber-400/20 text-amber-400 rounded-full flex items-center justify-center flex-shrink-0 text-xl border border-amber-400/40">
                 <i class="fa-solid fa-bullhorn"></i>
             </div>
@@ -98,11 +98,6 @@
             </div>
             
             <div class="flex items-center gap-2">
-                <button id="notifPermissionBtn" onclick="requestNotificationPermission()" class="glass-card hover:bg-white/25 transition-all text-amber-300 px-3 py-2.5 rounded-full flex items-center gap-2 text-xs font-semibold shadow-lg">
-                    <i class="fa-solid fa-bell"></i>
-                    <span class="hidden sm:inline">បើកដំណឹង</span>
-                </button>
-
                 <button id="installAppBtn" class="bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-400 hover:to-amber-500 text-slate-950 font-bold px-4 py-2.5 rounded-full flex items-center gap-2 text-sm shadow-lg hover:scale-105 active:scale-95 transition-all hidden">
                     <i class="fa-solid fa-download"></i>
                     <span>ដំឡើង App</span>
@@ -227,7 +222,7 @@
                     <input type="url" id="inputSchoolLogo" placeholder="Link Logo សាលា (URL)" class="w-full bg-slate-800 border border-slate-700 rounded-xl px-3 py-2 text-xs text-white">
                     <div class="border-2 border-dashed border-slate-700 hover:border-amber-400/50 rounded-2xl p-3 text-center cursor-pointer bg-slate-800/50" onclick="document.getElementById('schoolLogoFileInput').click()">
                         <i class="fa-solid fa-cloud-arrow-up text-xl text-amber-400 mb-1"></i>
-                        <p class="text-xs text-slate-300">ឬ Upload Logo សាលាពីកុំព្យូទ័រ</p>
+                        <p class="text-xs text-slate-300">ឬ Upload Logo សាលាពីកុំព្យូទ័រ/ទូរស័ព្ទ</p>
                     </div>
                     <input type="file" id="schoolLogoFileInput" accept="image/*" class="hidden">
                 </div>
@@ -243,13 +238,18 @@
                         <input type="url" id="inputBgUrl" placeholder="Link រូបភាព ឬ GIF" class="w-full bg-slate-800 border border-slate-700 rounded-xl px-3 py-2 text-xs text-white">
                         <button type="button" id="addBgUrlBtn" class="bg-amber-400/20 text-amber-300 text-xs px-4 py-2 rounded-xl border border-amber-400/30 font-semibold">បន្ថែម</button>
                     </div>
+                    <div class="border-2 border-dashed border-slate-700 hover:border-amber-400/50 rounded-2xl p-3 text-center cursor-pointer bg-slate-800/50" onclick="document.getElementById('photoInput').click()">
+                        <i class="fa-solid fa-cloud-arrow-up text-xl text-amber-400 mb-1"></i>
+                        <p class="text-xs text-slate-300">ឬ Upload រូប Background ពីកុំព្យូទ័រ/ទូរស័ព្ទ</p>
+                    </div>
+                    <input type="file" id="photoInput" multiple accept="image/*,.gif" class="hidden">
                     <div id="thumbContainer" class="grid grid-cols-4 gap-2 mt-2 max-h-28 overflow-y-auto"></div>
                 </div>
 
                 <div class="bg-slate-800/40 p-4 rounded-2xl border border-slate-700/50 space-y-3">
                     <div class="flex justify-between items-center">
-                        <h4 class="text-amber-300 font-bold text-sm"><i class="fa-solid fa-bullhorn"></i> ៥. សារជូនដំណឹងដល់សិស្ស</h4>
-                        <button type="button" id="addAnnouncementBtn" class="bg-amber-400/25 text-amber-300 text-xs px-3 py-1.5 rounded-lg border border-amber-400/30"><i class="fa-solid fa-plus"></i> បន្ថែម</button>
+                        <h4 class="text-amber-300 font-bold text-sm"><i class="fa-solid fa-bullhorn"></i> ៥. គ្រប់គ្រងសារជូនដំណឹងដល់សិស្ស</h4>
+                        <button type="button" id="addAnnouncementBtn" class="bg-amber-400/25 text-amber-300 text-xs px-3 py-1.5 rounded-lg border border-amber-400/30"><i class="fa-solid fa-plus"></i> បន្ថែមសារថ្មី</button>
                     </div>
                     <div id="announcementEditorList" class="space-y-3 max-h-60 overflow-y-auto pr-1"></div>
                 </div>
@@ -297,8 +297,7 @@
             return url;
         }
 
-        // --- PWA SERVICE WORKER WITH NOTIFICATION SUPPORT ---
-        let swRegistration = null;
+        // --- PWA SERVICE WORKER ---
         if ('serviceWorker' in navigator) {
             const swCode = `
                 self.addEventListener('install', (e) => { self.skipWaiting(); });
@@ -307,9 +306,7 @@
             `;
             const swBlob = new Blob([swCode], { type: 'text/javascript' });
             const swUrl = URL.createObjectURL(swBlob);
-            navigator.serviceWorker.register(swUrl).then(reg => {
-                swRegistration = reg;
-            }).catch(err => console.log('SW registration failed', err));
+            navigator.serviceWorker.register(swUrl).catch(err => console.log('SW registration failed', err));
         }
 
         let deferredPrompt;
@@ -436,7 +433,7 @@
         const announcementEditorList = document.getElementById('announcementEditorList');
         const addAnnouncementBtn = document.getElementById('addAnnouncementBtn');
 
-        // Real-Time Listener with Dual Notification Alert (In-App Toast & Service Worker)
+        // Real-Time Listener with In-App Toast Banner Alert
         onSnapshot(docRef, (docSnap) => {
             if (docSnap.exists()) {
                 const data = docSnap.data();
@@ -447,48 +444,18 @@
                     lastSeenUpdated = data.lastUpdated;
                     localStorage.setItem('last_seen_updated', lastSeenUpdated);
 
-                    // 1. Show In-App Toast Banner on Dashboard
+                    // Show In-App Toast Banner on Dashboard for students
                     toastMessage.textContent = config.title;
                     toastContainer.classList.remove('hidden');
                     setTimeout(() => {
                         toastContainer.classList.add('hidden');
                     }, 8000);
-
-                    // 2. Show Mobile Push / System Notification via Service Worker
-                    if (Notification.permission === "granted") {
-                        if (swRegistration) {
-                            swRegistration.showNotification("មានការអាប់ដេតព័ត៌មានថ្មី! 📢", {
-                                body: config.title,
-                                icon: processImageUrl(config.schoolLogo) || DEFAULT_LOGO,
-                                badge: processImageUrl(config.schoolLogo) || DEFAULT_LOGO,
-                                tag: 'countdown-update'
-                            });
-                        } else {
-                            new Notification("មានការអាប់ដេតព័ត៌មានថ្មី! 📢", {
-                                body: config.title,
-                                icon: processImageUrl(config.schoolLogo) || DEFAULT_LOGO
-                            });
-                        }
-                    }
                 }
                 initialLoad = false;
             } else {
                 setDoc(docRef, config);
             }
         });
-
-        window.requestNotificationPermission = async () => {
-            if (!("Notification" in window)) {
-                alert("Browser របស់អ្នកមិនគាំទ្រ Notification ទេ!");
-                return;
-            }
-            const permission = await Notification.requestPermission();
-            if (permission === "granted") {
-                alert("ការផ្ដល់ដំណឹង (Notification) ត្រូវបានបើកដោយជោគជ័យ!");
-            } else {
-                alert("អ្នកបានបដិសេធការផ្ដល់ដំណឹង!");
-            }
-        };
 
         function updateManifest() {
             const existingManifest = document.getElementById('pwaManifest');
@@ -747,6 +714,7 @@
             }
         });
 
+        // --- RENDER ANNOUNCEMENT EDITORS WITH DIRECT FILE UPLOAD SUPPORT ---
         function renderAnnouncementEditors() {
             announcementEditorList.innerHTML = '';
             if (!config.announcements) config.announcements = [];
@@ -764,12 +732,35 @@
                     </div>
                     <input type="text" value="${item.title || ''}" placeholder="ចំណងជើងសារ" class="w-full bg-slate-800 border border-slate-700 rounded-lg px-3 py-1.5 text-xs text-white ann-title">
                     <textarea placeholder="ខ្លឹមសារសារជូនដំណឹង" class="w-full bg-slate-800 border border-slate-700 rounded-lg px-3 py-1.5 text-xs text-white h-16 ann-desc">${item.desc || ''}</textarea>
-                    <input type="text" value="${item.image || ''}" placeholder="Image URL" class="w-full bg-slate-800 border border-slate-700 rounded-lg px-3 py-1.5 text-xs text-white ann-img">
+                    
+                    <div class="flex items-center gap-2">
+                        <input type="text" value="${item.image && !item.image.startsWith('data:') ? item.image : ''}" placeholder="Image URL ឬ Upload រូបភាព" class="w-full bg-slate-800 border border-slate-700 rounded-lg px-3 py-1.5 text-xs text-white ann-img">
+                        <label class="bg-slate-700 hover:bg-slate-600 text-white text-xs px-3 py-1.5 rounded-lg cursor-pointer flex-shrink-0">
+                            Upload
+                            <input type="file" accept="image/*,.gif" class="hidden ann-file-input">
+                        </label>
+                    </div>
+                    ${item.image ? `<div class="mt-1 text-[10px] text-amber-400 truncate">✓ មានរូបភាពរួចរាល់ (${item.image.substring(0, 30)}...)</div>` : ''}
                 `;
 
                 box.querySelector('.delete-ann-btn').onclick = () => {
                     config.announcements.splice(index, 1);
                     renderAnnouncementEditors();
+                };
+
+                // Handle file selection for announcement image
+                const fileInput = box.querySelector('.ann-file-input');
+                const imgInput = box.querySelector('.ann-img');
+                fileInput.onchange = (e) => {
+                    const file = e.target.files[0];
+                    if (file) {
+                        const reader = new FileReader();
+                        reader.onload = (event) => {
+                            config.announcements[index].image = event.target.result;
+                            renderAnnouncementEditors();
+                        };
+                        reader.readAsDataURL(file);
+                    }
                 };
 
                 announcementEditorList.appendChild(box);
@@ -811,17 +802,23 @@
             config.targetDateTime = `${inputDate.value}T${inputTime.value}`;
             config.systemUrl = inputSystemUrl.value;
 
+            // Collect announcements from DOM and preserve uploaded base64 images if inputs didn't change
             const titles = announcementEditorList.querySelectorAll('.ann-title');
             const descs = announcementEditorList.querySelectorAll('.ann-desc');
             const imgs = announcementEditorList.querySelectorAll('.ann-img');
 
             const updatedAnnouncements = [];
             for (let i = 0; i < titles.length; i++) {
+                let imgVal = imgs[i].value.trim();
+                // If text input is empty, retain existing base64 image if any
+                if (!imgVal && config.announcements[i] && config.announcements[i].image) {
+                    imgVal = config.announcements[i].image;
+                }
                 updatedAnnouncements.push({
-                    id: Date.now() + i,
+                    id: config.announcements[i]?.id || (Date.now() + i),
                     title: titles[i].value,
                     desc: descs[i].value,
-                    image: imgs[i].value
+                    image: imgVal
                 });
             }
             config.announcements = updatedAnnouncements;
@@ -834,7 +831,7 @@
                 config.password = inputNewPassword.value.trim();
             }
 
-            // Update timestamp to trigger real-time notification alert instantly
+            // Update timestamp to trigger toast alert on student dashboard
             config.lastUpdated = Date.now();
 
             try {
