@@ -3,10 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Takream</title>
+    <title>កម្មវិធី Countdown កាលបរិច្ឆេទ</title>
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Google Fonts -->
+    <!-- Google Fonts for Khmer (Moul & Kantumruuy Pro) & Inter -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Moul&family=Kantumruuy+Pro:ital,wght@0,300..700;1,300..700&family=Inter:wght@400;600;800;900&display=swap" rel="stylesheet">
@@ -14,8 +14,16 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
     <style>
-        body { font-family: 'Khmer OS Battambang', sans-serif; }
-        .khmer-moul { font-family: 'Moul', 'Khmer OS Muol Light', serif; }
+        body {
+            font-family: 'Khmer OS Battambang', sans-serif;
+        }
+        .khmer-moul {
+            font-family: 'Moul', 'Khmer OS Muol Light', serif;
+        }
+        .num-font {
+            font-family: 'Kantumruuy Pro', 'Inter', sans-serif;
+        }
+        /* Custom Glassmorphism Effect */
         .glass-panel {
             background: rgba(15, 23, 42, 0.65);
             backdrop-filter: blur(18px);
@@ -28,16 +36,36 @@
             -webkit-backdrop-filter: blur(12px);
             border: 1px solid rgba(255, 255, 255, 0.25);
         }
-        .text-glow { text-shadow: 0 0 20px rgba(0, 0, 0, 0.95), 0 3px 10px rgba(0, 0, 0, 0.9); }
-        .bg-slide { transition: opacity 1.5s ease-in-out; }
-        ::-webkit-scrollbar { width: 8px; }
-        ::-webkit-scrollbar-track { background: rgba(15, 23, 42, 0.6); }
-        ::-webkit-scrollbar-thumb { background: rgba(245, 158, 11, 0.5); border-radius: 4px; }
+        /* Text shadow for extreme clarity on any background image */
+        .text-glow {
+            text-shadow: 0 0 20px rgba(0, 0, 0, 0.95), 0 3px 10px rgba(0, 0, 0, 0.9);
+        }
+        .text-glow-gold {
+            text-shadow: 0 0 25px rgba(245, 158, 11, 0.6), 0 4px 15px rgba(0, 0, 0, 0.9);
+        }
+        /* Background Transition */
+        .bg-slide {
+            transition: opacity 1.5s ease-in-out;
+        }
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: rgba(15, 23, 42, 0.6);
+        }
+        ::-webkit-scrollbar-thumb {
+            background: rgba(245, 158, 11, 0.5);
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: rgba(245, 158, 11, 0.8);
+        }
     </style>
 </head>
 <body class="bg-slate-950 text-white min-h-screen overflow-x-hidden select-none">
 
-    <!-- Background Slideshow -->
+    <!-- Background Image Slideshow Container -->
     <div id="bgContainer" class="fixed inset-0 z-0 overflow-hidden">
         <div class="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/60 to-slate-950/70 z-10"></div>
         <div class="bg-slide absolute inset-0 bg-cover bg-center opacity-100 scale-105 transform transition-transform duration-10000 ease-out" id="bgImage" style="background-image: url('https://images.unsplash.com/photo-1519681393784-d120267933ba?q=80&w=1920&auto=format&fit=crop');"></div>
@@ -50,7 +78,7 @@
         <header class="flex flex-wrap justify-between items-center gap-3 w-full">
             <div class="flex items-center space-x-3 bg-slate-900/80 backdrop-blur-md px-4 py-2.5 rounded-full border border-amber-500/30 shadow-lg">
                 <img id="headerLogo" src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/svgs/solid/hourglass-half.svg" alt="Logo" class="w-6 h-6 object-contain rounded-full bg-amber-400/20 p-0.5">
-                <span class="font-bold text-sm md:text-base tracking-wide text-amber-300">វិទ្យាល័យសម្ដេចក្រឡាហោម ស ខេង តាគ្រាម</span>
+                <span class="font-bold text-sm md:text-base tracking-wide text-amber-300">BacII Countdown App</span>
             </div>
             
             <div class="flex items-center gap-2">
@@ -61,27 +89,29 @@
                 </button>
 
                 <!-- PWA Install Button -->
-                <button id="installAppBtn" class="bg-gradient-to-r from-amber-500 to-amber-600 text-slate-950 font-bold px-4 py-2.5 rounded-full flex items-center gap-2 text-sm shadow-lg hover:scale-105 active:scale-95 transition-all hidden">
+                <button id="installAppBtn" class="bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-400 hover:to-amber-500 text-slate-950 font-bold px-4 py-2.5 rounded-full flex items-center gap-2 text-sm shadow-lg hover:scale-105 active:scale-95 transition-all hidden">
                     <i class="fa-solid fa-download"></i>
                     <span>ដំឡើង App</span>
                 </button>
 
-                <!-- Fullscreen Toggle -->
-                <button id="fullscreenBtn" class="glass-card hover:bg-white/25 transition-all text-white px-4 py-2.5 rounded-full flex items-center gap-2 text-sm font-medium shadow-lg">
+                <!-- Fullscreen Toggle Button -->
+                <button id="fullscreenBtn" class="glass-card hover:bg-white/25 transition-all text-white px-4 py-2.5 rounded-full flex items-center gap-2 text-sm font-medium shadow-lg hover:scale-105 active:scale-95">
                     <i class="fa-solid fa-expand text-amber-400" id="fullscreenIcon"></i>
                     <span id="fullscreenText" class="hidden sm:inline">ពេញអេក្រង់</span>
                 </button>
 
                 <!-- Settings Button -->
-                <button id="openSettingsBtn" class="glass-card hover:bg-white/25 transition-all text-white px-4 py-2.5 rounded-full flex items-center gap-2 text-sm font-semibold shadow-lg border border-amber-400/40">
+                <button id="openSettingsBtn" class="glass-card hover:bg-white/25 transition-all text-white px-4 py-2.5 rounded-full flex items-center gap-2 text-sm font-semibold shadow-lg hover:scale-105 active:scale-95 border border-amber-400/40">
                     <i class="fa-solid fa-lock text-amber-300"></i>
                     <span>ការកំណត់</span>
                 </button>
             </div>
         </header>
 
-        <!-- CENTER DISPLAY AREA -->
+        <!-- CENTER DISPLAY AREA: Countdown Number -->
         <main class="flex-1 flex flex-col items-center justify-center text-center my-8">
+            
+            <!-- Event Title -->
             <div class="mb-6 max-w-full w-full px-4 flex flex-col items-center justify-center text-center">
                 <h1 id="displayTitle" style="white-space: nowrap;" class="khmer-moul text-xl sm:text-3xl md:text-5xl lg:text-6xl font-normal text-amber-300 tracking-wide text-glow text-center">
                     ថ្ងៃប្រឡងបាក់ឌុប ១០ សីហា ២០២៧
@@ -93,34 +123,46 @@
 
             <!-- Countdown Numbers Grid -->
             <div class="flex flex-wrap justify-center items-stretch gap-4 md:gap-6 max-w-full w-full px-4">
+                
+                <!-- DAYS Box -->
                 <div class="glass-card rounded-2xl md:rounded-3xl p-4 sm:p-6 flex flex-col items-center justify-center border border-white/10 shadow-2xl w-auto min-w-[130px] sm:min-w-[160px] px-6">
                     <span id="days" style="font-family: 'Khmer OS Muol Light', sans-serif;" class="text-5xl sm:text-7xl lg:text-8xl font-black text-amber-400 tracking-wider">០</span>
                     <span class="text-slate-300 text-sm md:text-lg mt-2 font-medium">ថ្ងៃ</span>
                 </div>
+
+                <!-- HOURS Box -->
                 <div class="glass-card rounded-2xl md:rounded-3xl p-4 sm:p-6 flex flex-col items-center justify-center border border-white/10 shadow-2xl w-auto min-w-[130px] sm:min-w-[160px] px-6">
                     <span id="hours" style="font-family: 'Khmer OS Muol Light', sans-serif;" class="text-5xl sm:text-7xl lg:text-8xl font-black text-amber-400 tracking-wider">០</span>
                     <span class="text-slate-300 text-sm md:text-lg mt-2 font-medium">ម៉ោង</span>
                 </div>
+
+                <!-- MINUTES Box -->
                 <div class="glass-card rounded-2xl md:rounded-3xl p-4 sm:p-6 flex flex-col items-center justify-center border border-white/10 shadow-2xl w-auto min-w-[130px] sm:min-w-[160px] px-6">
                     <span id="minutes" style="font-family: 'Khmer OS Muol Light', sans-serif;" class="text-5xl sm:text-7xl lg:text-8xl font-black text-amber-400 tracking-wider">០</span>
                     <span class="text-slate-300 text-sm md:text-lg mt-2 font-medium">នាទី</span>
                 </div>
+
+                <!-- SECONDS Box -->
                 <div class="glass-card rounded-2xl md:rounded-3xl p-4 sm:p-6 flex flex-col items-center justify-center border border-white/10 shadow-2xl w-auto min-w-[130px] sm:min-w-[160px] px-6">
                     <span id="seconds" style="font-family: 'Khmer OS Muol Light', sans-serif;" class="text-5xl sm:text-7xl lg:text-8xl font-black text-amber-400 tracking-wider">០</span>
                     <span class="text-slate-300 text-sm md:text-lg mt-2 font-medium">វិនាទី</span>
                 </div>
             </div>
 
-            <!-- Slideshow Controls -->
+            <!-- Slideshow Navigation Controls -->
             <div id="slideshowControls" class="mt-6 flex items-center gap-3 hidden">
-                <button id="prevSlide" class="glass-card p-2 rounded-full hover:bg-white/30 text-white text-sm w-9 h-9 flex items-center justify-center"><i class="fa-solid fa-chevron-left"></i></button>
+                <button id="prevSlide" class="glass-card p-2 rounded-full hover:bg-white/30 text-white text-sm w-9 h-9 flex items-center justify-center">
+                    <i class="fa-solid fa-chevron-left"></i>
+                </button>
                 <div id="slideDots" class="flex gap-2"></div>
-                <button id="nextSlide" class="glass-card p-2 rounded-full hover:bg-white/30 text-white text-sm w-9 h-9 flex items-center justify-center"><i class="fa-solid fa-chevron-right"></i></button>
+                <button id="nextSlide" class="glass-card p-2 rounded-full hover:bg-white/30 text-white text-sm w-9 h-9 flex items-center justify-center">
+                    <i class="fa-solid fa-chevron-right"></i>
+                </button>
             </div>
 
-            <!-- External Link -->
+            <!-- ACTION BUTTON: External System Link -->
             <div class="mt-8">
-                <a id="systemLinkBtn" href="#" target="_blank" class="inline-flex items-center gap-3 bg-gradient-to-r from-amber-500 via-amber-400 to-amber-500 hover:from-amber-400 text-slate-950 font-black text-base sm:text-lg md:text-xl px-8 py-4 rounded-full shadow-2xl transform hover:scale-105 transition-all border-2 border-white/40 ring-4 ring-amber-400/20">
+                <a id="systemLinkBtn" href="#" target="_blank" class="inline-flex items-center gap-3 bg-gradient-to-r from-amber-500 via-amber-400 to-amber-500 hover:from-amber-400 hover:to-amber-300 text-slate-950 font-black text-base sm:text-lg md:text-xl px-8 py-4 rounded-full shadow-2xl transform hover:scale-105 active:scale-95 transition-all border-2 border-white/40 ring-4 ring-amber-400/20">
                     <i class="fa-solid fa-graduation-cap text-2xl"></i>
                     <span>ចូលប្រើប្រាស់ប្រព័ន្ធគ្រប់គ្រងពិន្ទុ</span>
                     <i class="fa-solid fa-arrow-right-long text-lg"></i>
@@ -128,15 +170,19 @@
             </div>
         </main>
 
-        <!-- ANNOUNCEMENTS SECTION -->
+        <!-- STUDENT ANNOUNCEMENTS & NOTICES SECTION -->
         <section id="announcementsSection" class="w-full my-8">
             <div class="flex items-center gap-3 mb-6">
                 <div class="h-8 w-2 bg-amber-400 rounded-full"></div>
                 <h3 class="text-xl md:text-2xl font-bold text-white text-glow flex items-center gap-2">
-                    <i class="fa-solid fa-bullhorn text-amber-400"></i> សារជូនដំណឹង និងព័ត៌មានផ្សេងៗសម្រាប់សិស្ស
+                    <i class="fa-solid fa-bullhorn text-amber-400"></i>
+                    សារជូនដំណឹង និងព័ត៌មានផ្សេងៗសម្រាប់សិស្ស
                 </h3>
             </div>
-            <div id="announcementGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"></div>
+
+            <div id="announcementGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <!-- Announcement cards dynamically generated -->
+            </div>
         </section>
 
         <!-- Footer -->
@@ -145,91 +191,158 @@
         </footer>
     </div>
 
-    <!-- MODALS (Image, Password, Settings) -->
-    <div id="imageModal" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/90 backdrop-blur-md hidden cursor-pointer" onclick="closeImageModal()">
-        <img id="modalImage" src="" class="max-w-full max-h-[90vh] object-contain rounded-2xl shadow-2xl border border-white/20">
+    <!-- IMAGE PREVIEW MODAL -->
+    <div id="imageModal" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/90 backdrop-blur-md hidden transition-all cursor-pointer" onclick="closeImageModal()">
+        <div class="relative max-w-4xl max-h-[92vh] overflow-hidden flex items-center justify-center">
+            <img id="modalImage" src="" alt="Zoomed Image" class="max-w-full max-h-[90vh] object-contain rounded-2xl shadow-2xl border border-white/20">
+        </div>
     </div>
 
-    <div id="passwordModal" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/85 backdrop-blur-md hidden">
-        <div class="bg-slate-900 border border-amber-500/30 rounded-3xl p-6 max-w-sm w-full shadow-2xl text-center">
-            <div class="w-16 h-16 bg-amber-400/10 text-amber-400 rounded-full flex items-center justify-center text-2xl mx-auto mb-4 border border-amber-400/30"><i class="fa-solid fa-shield-halved"></i></div>
+    <!-- PASSWORD PROMPT MODAL -->
+    <div id="passwordModal" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/85 backdrop-blur-md hidden transition-all">
+        <div class="bg-slate-900 border border-amber-500/30 rounded-3xl p-6 max-w-sm w-full shadow-2xl text-slate-100 text-center">
+            <div class="w-16 h-16 bg-amber-400/10 text-amber-400 rounded-full flex items-center justify-center text-2xl mx-auto mb-4 border border-amber-400/30">
+                <i class="fa-solid fa-shield-halved"></i>
+            </div>
             <h3 class="text-xl font-bold mb-1 text-amber-300">ផ្ទៀងផ្ទាត់ពាក្យសម្ងាត់</h3>
             <p class="text-slate-400 text-xs mb-5">សូមបញ្ចូលលេខកូដសម្ងាត់ដើម្បីចូលទៅកាន់ការកំណត់</p>
+            
             <form id="passwordForm" class="space-y-4">
-                <input type="password" id="inputPassword" placeholder="បញ្ចូលលេខកូដ" class="w-full bg-slate-800 border border-slate-700 rounded-xl px-4 py-3 text-center text-white text-lg font-bold tracking-widest focus:outline-none focus:border-amber-400">
-                <p id="passwordError" class="text-red-400 text-xs hidden"><i class="fa-solid fa-triangle-exclamation"></i> លេខកូដសម្ងាត់មិនត្រឹមត្រូវទេ!</p>
+                <input type="password" id="inputPassword" placeholder="បញ្ចូលលេខកូដ" class="w-full bg-slate-800 border border-slate-700 rounded-xl px-4 py-3 text-center text-white text-lg font-bold tracking-widest focus:outline-none focus:border-amber-400 transition-all">
+                <p id="passwordError" class="text-red-400 text-xs hidden flex items-center justify-center gap-1">
+                    <i class="fa-solid fa-triangle-exclamation"></i> លេខកូដសម្ងាត់មិនត្រឹមត្រូវទេ!
+                </p>
                 <div class="flex gap-2 pt-2">
-                    <button type="button" id="closePassModalBtn" class="w-1/2 bg-slate-800 hover:bg-slate-700 text-slate-300 py-2.5 rounded-xl text-sm">បោះបង់</button>
+                    <button type="button" id="closePassModalBtn" class="w-1/2 bg-slate-800 hover:bg-slate-700 text-slate-300 font-medium py-2.5 rounded-xl text-sm">បោះបង់</button>
                     <button type="submit" class="w-1/2 bg-amber-400 hover:bg-amber-500 text-slate-950 font-bold py-2.5 rounded-xl text-sm shadow-lg">បញ្ជាក់</button>
                 </div>
             </form>
         </div>
     </div>
 
-    <div id="settingsModal" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/85 backdrop-blur-md hidden">
+    <!-- SETTINGS MODAL DIALOG -->
+    <div id="settingsModal" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/85 backdrop-blur-md hidden transition-all">
         <div class="bg-slate-900 border border-slate-700/80 rounded-3xl p-6 md:p-8 max-w-2xl w-full shadow-2xl text-slate-100 max-h-[90vh] overflow-y-auto">
+            
             <div class="flex justify-between items-center mb-6 border-b border-slate-800 pb-4">
-                <h3 class="text-xl font-bold flex items-center gap-2 text-amber-400"><i class="fa-solid fa-sliders"></i> ការកំណត់ប្រព័ន្ធ (Real-Time Sync)</h3>
-                <button id="closeSettingsBtn" class="text-slate-400 hover:text-white text-xl"><i class="fa-solid fa-xmark"></i></button>
+                <h3 class="text-xl font-bold flex items-center gap-2 text-amber-400">
+                    <i class="fa-solid fa-sliders"></i> ការកំណត់ប្រព័ន្ធ & រូបថត (Real-Time Sync)
+                </h3>
+                <button id="closeSettingsBtn" class="text-slate-400 hover:text-white text-xl">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
             </div>
+
             <form id="settingsForm" class="space-y-6">
+                <!-- Section 1: Event & Countdown Time -->
                 <div class="bg-slate-800/40 p-4 rounded-2xl border border-slate-700/50 space-y-4">
-                    <h4 class="text-amber-300 font-bold text-sm"><i class="fa-solid fa-calendar-days"></i> ១. កំណត់កាលបរិច្ឆេទ Countdown</h4>
+                    <h4 class="text-amber-300 font-bold text-sm flex items-center gap-2">
+                        <i class="fa-solid fa-calendar-days"></i> ១. កំណត់កាលបរិច្ឆេទ Countdown
+                    </h4>
                     <div>
-                        <label class="block text-xs text-slate-300 mb-1">ឈ្មោះព្រឹត្តិការណ៍</label>
-                        <input type="text" id="inputTitle" required class="w-full bg-slate-800 border border-slate-700 rounded-xl px-4 py-2.5 text-white text-sm">
+                        <label class="block text-xs text-slate-300 mb-1">ឈ្មោះព្រឹត្តិការណ៍ / Event Title</label>
+                        <input type="text" id="inputTitle" required class="w-full bg-slate-800 border border-slate-700 rounded-xl px-4 py-2.5 text-white text-sm focus:outline-none focus:border-amber-400">
                     </div>
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
-                        <div><label class="block text-xs text-slate-300 mb-1">កាលបរិច្ឆេទ</label><input type="date" id="inputDate" required class="w-full bg-slate-800 border border-slate-700 rounded-xl px-4 py-2 text-white text-sm"></div>
-                        <div><label class="block text-xs text-slate-300 mb-1">ម៉ោង</label><input type="time" id="inputTime" required class="w-full bg-slate-800 border border-slate-700 rounded-xl px-4 py-2 text-white text-sm"></div>
+                        <div>
+                            <label class="block text-xs text-slate-300 mb-1">កាលបរិច្ឆេទ</label>
+                            <input type="date" id="inputDate" required class="w-full bg-slate-800 border border-slate-700 rounded-xl px-4 py-2 text-white text-sm focus:outline-none focus:border-amber-400">
+                        </div>
+                        <div>
+                            <label class="block text-xs text-slate-300 mb-1">ម៉ោង</label>
+                            <input type="time" id="inputTime" required class="w-full bg-slate-800 border border-slate-700 rounded-xl px-4 py-2 text-white text-sm focus:outline-none focus:border-amber-400">
+                        </div>
                     </div>
                 </div>
 
+                <!-- Section 2: School Logo Customization -->
                 <div class="bg-slate-800/40 p-4 rounded-2xl border border-slate-700/50 space-y-3">
-                    <h4 class="text-amber-300 font-bold text-sm"><i class="fa-solid fa-school"></i> ២. Logo សាលា</h4>
-                    <input type="url" id="inputSchoolLogo" placeholder="Link Logo សាលា (URL)" class="w-full bg-slate-800 border border-slate-700 rounded-xl px-3 py-2 text-xs text-white">
-                </div>
-
-                <div class="bg-slate-800/40 p-4 rounded-2xl border border-slate-700/50 space-y-3">
-                    <h4 class="text-amber-300 font-bold text-sm"><i class="fa-solid fa-link"></i> ៣. តំណភ្ជាប់ប្រព័ន្ធពិន្ទុ</h4>
-                    <input type="url" id="inputSystemUrl" placeholder="https://..." class="w-full bg-slate-800 border border-slate-700 rounded-xl px-4 py-2.5 text-white text-sm">
-                </div>
-
-                <div class="bg-slate-800/40 p-4 rounded-2xl border border-slate-700/50 space-y-3">
-                    <h4 class="text-amber-300 font-bold text-sm"><i class="fa-solid fa-image"></i> ៤. រូបថត Background (GIF / Image)</h4>
+                    <h4 class="text-amber-300 font-bold text-sm flex items-center gap-2">
+                        <i class="fa-solid fa-school"></i> ២. Logo សាលា (សម្រាប់ App Icon និង Header)
+                    </h4>
                     <div class="flex gap-2">
-                        <input type="url" id="inputBgUrl" placeholder="Link រូបភាព ឬ GIF" class="w-full bg-slate-800 border border-slate-700 rounded-xl px-3 py-2 text-xs text-white">
-                        <button type="button" id="addBgUrlBtn" class="bg-amber-400/20 text-amber-300 text-xs px-4 py-2 rounded-xl border border-amber-400/30 font-semibold">បន្ថែម</button>
+                        <input type="url" id="inputSchoolLogo" placeholder="បញ្ចូល Link Logo សាលា (URL)" class="w-full bg-slate-800 border border-slate-700 rounded-xl px-3 py-2 text-xs text-white focus:outline-none focus:border-amber-400">
                     </div>
+                    <div class="border-2 border-dashed border-slate-700 hover:border-amber-400/50 rounded-2xl p-3 text-center cursor-pointer bg-slate-800/50 hover:bg-slate-800 transition-all" onclick="document.getElementById('schoolLogoFileInput').click()">
+                        <i class="fa-solid fa-cloud-arrow-up text-xl text-amber-400 mb-1"></i>
+                        <p class="text-xs text-slate-300">ឬចុចទីនេះដើម្បី Upload Logo សាលាពីកុំព្យូទ័រ</p>
+                    </div>
+                    <input type="file" id="schoolLogoFileInput" accept="image/*" class="hidden">
+                </div>
+
+                <!-- Section 3: External Link System -->
+                <div class="bg-slate-800/40 p-4 rounded-2xl border border-slate-700/50 space-y-3">
+                    <h4 class="text-amber-300 font-bold text-sm flex items-center gap-2">
+                        <i class="fa-solid fa-link"></i> ៣. តំណភ្ជាប់ "ប្រព័ន្ធគ្រប់គ្រងពិន្ទុ"
+                    </h4>
+                    <div>
+                        <input type="url" id="inputSystemUrl" placeholder="https://example.com/scores" class="w-full bg-slate-800 border border-slate-700 rounded-xl px-4 py-2.5 text-white text-sm focus:outline-none focus:border-amber-400">
+                    </div>
+                </div>
+
+                <!-- Section 4: Background Images Upload / URL -->
+                <div class="bg-slate-800/40 p-4 rounded-2xl border border-slate-700/50 space-y-3">
+                    <h4 class="text-amber-300 font-bold text-sm flex items-center gap-2">
+                        <i class="fa-solid fa-image"></i> ៤. រូបថត Background (รองรับ GIF & រូបភាពមានចលនា)
+                    </h4>
+                    
+                    <div class="flex gap-2">
+                        <input type="url" id="inputBgUrl" placeholder="បញ្ចូល Link រូបភាព ឬ GIF (ឧ៖ https://.../image.gif)" class="w-full bg-slate-800 border border-slate-700 rounded-xl px-3 py-2 text-xs text-white focus:outline-none focus:border-amber-400">
+                        <button type="button" id="addBgUrlBtn" class="bg-amber-400/20 hover:bg-amber-400/30 text-amber-300 text-xs px-4 py-2 rounded-xl border border-amber-400/30 font-semibold flex-shrink-0">
+                            បន្ថែម Link
+                        </button>
+                    </div>
+
+                    <div class="border-2 border-dashed border-slate-700 hover:border-amber-400/50 rounded-2xl p-3 text-center cursor-pointer bg-slate-800/50 hover:bg-slate-800 transition-all" onclick="document.getElementById('photoInput').click()">
+                        <i class="fa-solid fa-cloud-arrow-up text-xl text-amber-400 mb-1"></i>
+                        <p class="text-xs text-slate-300">ឬចុចទីនេះដើម្បី Upload រូបថត/GIF ពីកុំព្យូទ័រ</p>
+                    </div>
+                    <input type="file" id="photoInput" multiple accept="image/*,.gif" class="hidden">
                     <div id="thumbContainer" class="grid grid-cols-4 gap-2 mt-2 max-h-28 overflow-y-auto"></div>
                 </div>
 
+                <!-- Section 5: Announcements Management -->
                 <div class="bg-slate-800/40 p-4 rounded-2xl border border-slate-700/50 space-y-3">
                     <div class="flex justify-between items-center">
-                        <h4 class="text-amber-300 font-bold text-sm"><i class="fa-solid fa-bullhorn"></i> ៥. សារជូនដំណឹងដល់សិស្ស</h4>
-                        <button type="button" id="addAnnouncementBtn" class="bg-amber-400/25 text-amber-300 text-xs px-3 py-1.5 rounded-lg border border-amber-400/30"><i class="fa-solid fa-plus"></i> បន្ថែម</button>
+                        <h4 class="text-amber-300 font-bold text-sm flex items-center gap-2">
+                            <i class="fa-solid fa-bullhorn"></i> ៥. គ្រប់គ្រងសារជូនដំណឹងដល់សិស្ស
+                        </h4>
+                        <button type="button" id="addAnnouncementBtn" class="bg-amber-400/25 hover:bg-amber-400/40 text-amber-300 text-xs px-3 py-1.5 rounded-lg border border-amber-400/30 flex items-center gap-1 font-semibold">
+                            <i class="fa-solid fa-plus"></i> បន្ថែមសារថ្មី
+                        </button>
                     </div>
                     <div id="announcementEditorList" class="space-y-3 max-h-60 overflow-y-auto pr-1"></div>
                 </div>
 
+                <!-- Section 6: Password Change -->
                 <div class="bg-slate-800/40 p-4 rounded-2xl border border-slate-700/50 space-y-3">
-                    <h4 class="text-amber-300 font-bold text-sm"><i class="fa-solid fa-key"></i> ៦. ប្ដូរលេខកូដសម្ងាត់</h4>
-                    <input type="password" id="inputNewPassword" placeholder="លេខកូដថ្មី (ទុកទទេបើមិនប្ដូរ)" class="w-full bg-slate-800 border border-slate-700 rounded-xl px-4 py-2.5 text-white text-sm">
+                    <h4 class="text-amber-300 font-bold text-sm flex items-center gap-2">
+                        <i class="fa-solid fa-key"></i> ៦. ប្ដូរលេខកូដសម្ងាត់ការកំណត់
+                    </h4>
+                    <div>
+                        <input type="password" id="inputNewPassword" placeholder="លេខកូដសម្ងាត់ថ្មី (ទុកទទេបើមិនចង់ប្ដូរ)" class="w-full bg-slate-800 border border-slate-700 rounded-xl px-4 py-2.5 text-white text-sm focus:outline-none focus:border-amber-400">
+                    </div>
                 </div>
 
+                <!-- Action Buttons -->
                 <div class="flex gap-3 pt-2">
-                    <button type="button" id="resetBtn" class="w-1/3 bg-slate-800 hover:bg-slate-700 text-slate-300 py-3 rounded-xl text-sm">កំណត់ដើម</button>
-                    <button type="submit" id="saveSettingsBtn" class="w-2/3 bg-amber-400 hover:bg-amber-500 text-slate-950 font-bold py-3 rounded-xl shadow-lg text-sm">រក្សាទុក (Sync Real-Time)</button>
+                    <button type="button" id="resetBtn" class="w-1/3 bg-slate-800 hover:bg-slate-700 text-slate-300 font-medium py-3 rounded-xl text-sm">
+                        កំណត់ដើម
+                    </button>
+                    <button type="submit" id="saveSettingsBtn" class="w-2/3 bg-amber-400 hover:bg-amber-500 text-slate-950 font-bold py-3 rounded-xl shadow-lg text-sm transition-all">
+                        រក្សាទុក (Real-Time Sync)
+                    </button>
                 </div>
             </form>
         </div>
     </div>
 
-    <!-- FIREBASE & APP LOGIC -->
+    <!-- JAVASCRIPT & FIREBASE REAL-TIME LOGIC -->
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
         import { getFirestore, doc, setDoc, onSnapshot } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
 
+        // Firebase Configuration (បានភ្ជាប់រួចជាស្រេច)
         const firebaseConfig = {
             apiKey: "AIzaSyD6U01ENfwYI4-2yqrRrFjpo-470sEhOtw",
             authDomain: "bacii-countdown.firebaseapp.com",
@@ -244,6 +357,38 @@
         const db = getFirestore(app);
         const docRef = doc(db, "settings", "countdown_data");
 
+        // --- PWA SERVICE WORKER ---
+        if ('serviceWorker' in navigator) {
+            const swCode = `
+                self.addEventListener('install', (e) => { self.skipWaiting(); });
+                self.addEventListener('activate', (e) => { e.waitUntil(clients.claim()); });
+                self.addEventListener('fetch', (e) => { e.respondWith(fetch(e.request).catch(() => caches.match(e.request))); });
+            `;
+            const swBlob = new Blob([swCode], { type: 'text/javascript' });
+            const swUrl = URL.createObjectURL(swBlob);
+            navigator.serviceWorker.register(swUrl).catch(err => console.log('SW registration failed', err));
+        }
+
+        let deferredPrompt;
+        const installAppBtn = document.getElementById('installAppBtn');
+        window.addEventListener('beforeinstallprompt', (e) => {
+            e.preventDefault();
+            deferredPrompt = e;
+            installAppBtn.classList.remove('hidden');
+        });
+
+        installAppBtn.addEventListener('click', async () => {
+            if (deferredPrompt) {
+                deferredPrompt.prompt();
+                const { outcome } = await deferredPrompt.userChoice;
+                if (outcome === 'accepted') {
+                    installAppBtn.classList.add('hidden');
+                }
+                deferredPrompt = null;
+            }
+        });
+
+        // --- APP LOGIC & REAL-TIME SYNC ---
         const KHMER_DIGITS = ['០', '១', '២', '៣', '៤', '៥', '៦', '៧', '៨', '៩'];
         const KHMER_DAYS = ['អាទិត្យ', 'ចន្ទ', 'អង្គារ', 'ពុធ', 'ព្រហស្បតិ៍', 'សុក្រ', 'សៅរ៍'];
         const KHMER_MONTHS = ['មករា', 'កុម្ភៈ', 'មីនា', 'មេសា', 'ឧសភា', 'មិថុនា', 'កក្កដា', 'សីហា', 'កញ្ញា', 'តុលា', 'វិច្ឆិកា', 'ធ្នូ'];
@@ -257,37 +402,113 @@
             const dayNum = toKhmerNum(dateObj.getDate());
             const monthName = KHMER_MONTHS[dateObj.getMonth()];
             const yearNum = toKhmerNum(dateObj.getFullYear());
+            
             let hours = dateObj.getHours();
             const minutes = dateObj.getMinutes();
             const ampm = hours >= 12 ? 'ល្ងាច' : 'ព្រឹក';
-            hours = hours % 12 || 12;
-            return `ថ្ងៃ${dayName} ទី${dayNum} ខែ${monthName} ឆ្នាំ${yearNum} ម៉ោង ${toKhmerNum(String(hours).padStart(2, '0'))}:${toKhmerNum(String(minutes).padStart(2, '0'))} ${ampm}`;
+            hours = hours % 12;
+            hours = hours ? hours : 12;
+            
+            const hoursKhmer = toKhmerNum(String(hours).padStart(2, '0'));
+            const minutesKhmer = toKhmerNum(String(minutes).padStart(2, '0'));
+
+            return `ថ្ងៃ${dayName} ទី${dayNum} ខែ${monthName} ឆ្នាំ${yearNum} ម៉ោង ${hoursKhmer}:${minutesKhmer} ${ampm}`;
         }
 
-        const DEFAULT_CONFIG = {
-            title: "ថ្ងៃប្រឡងបាក់ឌុប ១០ សីហា ២០២៧",
-            targetDateTime: "2027-08-10T00:00",
-            photos: ["https://images.unsplash.com/photo-1519681393784-d120267933ba?q=80&w=1920&auto=format&fit=crop"],
-            schoolLogo: "https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/svgs/solid/hourglass-half.svg",
-            password: "1234",
-            systemUrl: "https://google.com",
-            announcements: [
-                { id: 1, title: "កាលវិភាគរំលឹកមេរៀន", desc: "សូមសិស្សានុសិស្សទាំងអស់ចូលរួមរំលឹកមេរៀន។", image: "https://images.unsplash.com/photo-1434030216411-0b793f4b4173?q=80&w=600&auto=format&fit=crop" }
-            ]
+        const DEFAULT_TITLE = "ថ្ងៃប្រឡងបាក់ឌុប ១០ សីហា ២០២៧";
+        const DEFAULT_DATE = "2027-08-10T00:00";
+        const DEFAULT_BG = "https://images.unsplash.com/photo-1519681393784-d120267933ba?q=80&w=1920&auto=format&fit=crop";
+        const DEFAULT_LOGO = "https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/svgs/solid/hourglass-half.svg";
+        const DEFAULT_PASSWORD = "1234";
+        const DEFAULT_SYSTEM_URL = "https://google.com";
+
+        const DEFAULT_ANNOUNCEMENTS = [
+            {
+                id: 1,
+                title: "កាលវិភាគរំលឹកមេរៀនប្រឡងបាក់ឌុប",
+                desc: "សូមសិស្សានុសិស្សទាំងអស់ចូលរួមរំលឹកមេរៀនតាមកាលវិភាគដែលបានកំណត់ក្នុងថ្នាក់រៀន។",
+                image: "https://images.unsplash.com/photo-1434030216411-0b793f4b4173?q=80&w=600&auto=format&fit=crop"
+            },
+            {
+                id: 2,
+                title: "ការចុះឈ្មោះប្រឡងល្បងសមត្ថភាព",
+                desc: "ការប្រឡងសាកល្បងសមត្ថភាពលើកទី១ នឹងចាប់ផ្ដើមនៅដើមខែក្រោយនេះ។",
+                image: "https://images.unsplash.com/photo-1523240795612-9a054b0db644?q=80&w=600&auto=format&fit=crop"
+            }
+        ];
+
+        let config = {
+            title: DEFAULT_TITLE,
+            targetDateTime: DEFAULT_DATE,
+            photos: [DEFAULT_BG],
+            schoolLogo: DEFAULT_LOGO,
+            password: DEFAULT_PASSWORD,
+            systemUrl: DEFAULT_SYSTEM_URL,
+            announcements: DEFAULT_ANNOUNCEMENTS
         };
 
-        let config = { ...DEFAULT_CONFIG };
-        let countdownInterval = null;
-        let slideInterval = null;
         let currentSlideIndex = 0;
+        let slideInterval = null;
+        let countdownInterval = null;
+
+        const displayTitle = document.getElementById('displayTitle');
+        const targetDateSubtitle = document.getElementById('targetDateSubtitle');
+        const daysEl = document.getElementById('days');
+        const hoursEl = document.getElementById('hours');
+        const minutesEl = document.getElementById('minutes');
+        const secondsEl = document.getElementById('seconds');
+        const headerLogo = document.getElementById('headerLogo');
+        
+        const settingsModal = document.getElementById('settingsModal');
+        const passwordModal = document.getElementById('passwordModal');
+        const imageModal = document.getElementById('imageModal');
+        const modalImage = document.getElementById('modalImage');
+
+        const openSettingsBtn = document.getElementById('openSettingsBtn');
+        const closeSettingsBtn = document.getElementById('closeSettingsBtn');
+        const closePassModalBtn = document.getElementById('closePassModalBtn');
+        
+        const settingsForm = document.getElementById('settingsForm');
+        const passwordForm = document.getElementById('passwordForm');
+        const inputPassword = document.getElementById('inputPassword');
+        const passwordError = document.getElementById('passwordError');
+
+        const inputTitle = document.getElementById('inputTitle');
+        const inputDate = document.getElementById('inputDate');
+        const inputTime = document.getElementById('inputTime');
+        const inputSchoolLogo = document.getElementById('inputSchoolLogo');
+        const schoolLogoFileInput = document.getElementById('schoolLogoFileInput');
+        const inputSystemUrl = document.getElementById('inputSystemUrl');
+        const inputNewPassword = document.getElementById('inputNewPassword');
+        const photoInput = document.getElementById('photoInput');
+        const inputBgUrl = document.getElementById('inputBgUrl');
+        const addBgUrlBtn = document.getElementById('addBgUrlBtn');
+        const thumbContainer = document.getElementById('thumbContainer');
+        const resetBtn = document.getElementById('resetBtn');
+
+        const systemLinkBtn = document.getElementById('systemLinkBtn');
+        const fullscreenBtn = document.getElementById('fullscreenBtn');
+        const fullscreenIcon = document.getElementById('fullscreenIcon');
+        const fullscreenText = document.getElementById('fullscreenText');
+
+        const bgImage = document.getElementById('bgImage');
+        const slideshowControls = document.getElementById('slideshowControls');
+        const slideDots = document.getElementById('slideDots');
+        const prevSlide = document.getElementById('prevSlide');
+        const nextSlide = document.getElementById('nextSlide');
+
+        const announcementGrid = document.getElementById('announcementGrid');
+        const announcementEditorList = document.getElementById('announcementEditorList');
+        const addAnnouncementBtn = document.getElementById('addAnnouncementBtn');
 
         // Real-Time Listener (Firestore onSnapshot)
         onSnapshot(docRef, (docSnap) => {
             if (docSnap.exists()) {
-                config = { ...DEFAULT_CONFIG, ...docSnap.data() };
+                const data = docSnap.data();
+                config = { ...config, ...data };
                 updateUI();
             } else {
-                setDoc(docRef, DEFAULT_CONFIG);
+                setDoc(docRef, config);
             }
         });
 
@@ -303,8 +524,9 @@
         };
 
         function updateManifest() {
-            const existing = document.getElementById('pwaManifest');
-            if (existing) existing.remove();
+            const existingManifest = document.getElementById('pwaManifest');
+            if (existingManifest) existingManifest.remove();
+
             const manifestData = {
                 "name": "BacII Countdown App",
                 "short_name": "Countdown",
@@ -312,22 +534,29 @@
                 "display": "standalone",
                 "background_color": "#090d16",
                 "theme_color": "#f59e0b",
-                "icons": [{ "src": config.schoolLogo || DEFAULT_CONFIG.schoolLogo, "sizes": "192x192 512x512", "type": "image/png" }]
+                "icons": [
+                    {
+                        "src": config.schoolLogo || DEFAULT_LOGO,
+                        "sizes": "192x192 512x512",
+                        "type": "image/png"
+                    }
+                ]
             };
-            const blob = new Blob([JSON.stringify(manifestData)], { type: 'application/json' });
-            const link = document.createElement('link');
-            link.id = 'pwaManifest';
-            link.rel = 'manifest';
-            link.href = URL.createObjectURL(blob);
-            document.head.appendChild(link);
+            const manifestBlob = new Blob([JSON.stringify(manifestData)], { type: 'application/json' });
+            const manifestLink = document.createElement('link');
+            manifestLink.id = 'pwaManifest';
+            manifestLink.rel = 'manifest';
+            manifestLink.href = URL.createObjectURL(manifestBlob);
+            document.head.appendChild(manifestLink);
         }
 
         function updateUI() {
-            document.getElementById('displayTitle').textContent = config.title;
+            displayTitle.textContent = config.title;
             const targetDate = new Date(config.targetDateTime);
-            document.getElementById('targetDateSubtitle').textContent = `កាលបរិច្ឆេទកំណត់៖ ${formatKhmerDate(targetDate)}`;
-            document.getElementById('systemLinkBtn').href = config.systemUrl || '#';
-            document.getElementById('headerLogo').src = config.schoolLogo || DEFAULT_CONFIG.schoolLogo;
+            targetDateSubtitle.textContent = `កាលបរិច្ឆេទកំណត់៖ ${formatKhmerDate(targetDate)}`;
+            systemLinkBtn.href = config.systemUrl || '#';
+            headerLogo.src = config.schoolLogo || DEFAULT_LOGO;
+
             updateManifest();
             currentSlideIndex = 0;
             updateSlideshow();
@@ -337,194 +566,288 @@
 
         function startCountdown() {
             if (countdownInterval) clearInterval(countdownInterval);
+
             function updateTimer() {
                 const now = new Date().getTime();
                 const target = new Date(config.targetDateTime).getTime();
-                const diff = target - now;
-                if (diff <= 0) {
-                    document.getElementById('days').textContent = "០០";
-                    document.getElementById('hours').textContent = "០០";
-                    document.getElementById('minutes').textContent = "០០";
-                    document.getElementById('seconds').textContent = "០០";
+                const difference = target - now;
+
+                if (difference <= 0) {
+                    daysEl.textContent = "០០";
+                    hoursEl.textContent = "០០";
+                    minutesEl.textContent = "០០";
+                    secondsEl.textContent = "០០";
+                    displayTitle.textContent = "🎉 បានដល់ពេលវេលាកំណត់ហើយ! 🎉";
                     return;
                 }
-                const d = Math.floor(diff / (1000 * 60 * 60 * 24));
-                const h = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-                const m = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
-                const s = Math.floor((diff % (1000 * 60)) / 1000);
-                document.getElementById('days').textContent = toKhmerNum(d < 10 ? `0${d}` : d);
-                document.getElementById('hours').textContent = toKhmerNum(h < 10 ? `0${h}` : h);
-                document.getElementById('minutes').textContent = toKhmerNum(m < 10 ? `0${m}` : m);
-                document.getElementById('seconds').textContent = toKhmerNum(s < 10 ? `0${s}` : s);
+
+                const days = Math.floor(difference / (1000 * 60 * 60 * 24));
+                const hours = Math.floor((difference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                const minutes = Math.floor((difference % (1000 * 60 * 60)) / (1000 * 60));
+                const seconds = Math.floor((difference % (1000 * 60)) / 1000);
+
+                daysEl.textContent = toKhmerNum(days < 10 ? `0${days}` : days);
+                hoursEl.textContent = toKhmerNum(hours < 10 ? `0${hours}` : hours);
+                minutesEl.textContent = toKhmerNum(minutes < 10 ? `0${minutes}` : minutes);
+                secondsEl.textContent = toKhmerNum(seconds < 10 ? `0${seconds}` : seconds);
             }
+
             updateTimer();
             countdownInterval = setInterval(updateTimer, 1000);
         }
 
         function updateSlideshow() {
             if (slideInterval) clearInterval(slideInterval);
-            if (!config.photos || config.photos.length === 0) config.photos = [DEFAULT_CONFIG.photos[0]];
-            const bgImage = document.getElementById('bgImage');
+            if (!config.photos || config.photos.length === 0) {
+                config.photos = [DEFAULT_BG];
+            }
+
             bgImage.style.backgroundImage = `url('${config.photos[currentSlideIndex]}')`;
-            const controls = document.getElementById('slideshowControls');
+
             if (config.photos.length > 1) {
-                controls.classList.remove('hidden');
+                slideshowControls.classList.remove('hidden');
                 renderDots();
-                slideInterval = setInterval(() => {
-                    currentSlideIndex = (currentSlideIndex + 1) % config.photos.length;
-                    bgImage.style.opacity = '0.3';
-                    setTimeout(() => {
-                        bgImage.style.backgroundImage = `url('${config.photos[currentSlideIndex]}')`;
-                        bgImage.style.opacity = '1';
-                    }, 300);
-                    renderDots();
-                }, 6000);
+                slideInterval = setInterval(nextSlideImage, 6000);
             } else {
-                controls.classList.add('hidden');
+                slideshowControls.classList.add('hidden');
             }
         }
 
         function renderDots() {
-            const dots = document.getElementById('slideDots');
-            dots.innerHTML = '';
+            slideDots.innerHTML = '';
             config.photos.forEach((_, idx) => {
                 const dot = document.createElement('button');
-                dot.className = `w-2.5 h-2.5 rounded-full transition-all ${idx === currentSlideIndex ? 'bg-amber-400 w-6' : 'bg-white/40'}`;
-                dot.onclick = () => { currentSlideIndex = idx; updateSlideshow(); };
-                dots.appendChild(dot);
+                dot.className = `w-2.5 h-2.5 rounded-full transition-all ${idx === currentSlideIndex ? 'bg-amber-400 w-6' : 'bg-white/40 hover:bg-white/70'}`;
+                dot.addEventListener('click', () => {
+                    currentSlideIndex = idx;
+                    updateSlideshow();
+                });
+                slideDots.appendChild(dot);
             });
         }
 
+        function nextSlideImage() {
+            currentSlideIndex = (currentSlideIndex + 1) % config.photos.length;
+            bgImage.style.opacity = '0.3';
+            setTimeout(() => {
+                bgImage.style.backgroundImage = `url('${config.photos[currentSlideIndex]}')`;
+                bgImage.style.opacity = '1';
+            }, 300);
+            renderDots();
+        }
+
+        function prevSlideImage() {
+            currentSlideIndex = (currentSlideIndex - 1 + config.photos.length) % config.photos.length;
+            bgImage.style.opacity = '0.3';
+            setTimeout(() => {
+                bgImage.style.backgroundImage = `url('${config.photos[currentSlideIndex]}')`;
+                bgImage.style.opacity = '1';
+            }, 300);
+            renderDots();
+        }
+
+        window.openImageModal = (imgSrc) => {
+            modalImage.src = imgSrc;
+            imageModal.classList.remove('hidden');
+        };
+
+        window.closeImageModal = () => {
+            imageModal.classList.add('hidden');
+        };
+
         function renderAnnouncements() {
-            const grid = document.getElementById('announcementGrid');
-            grid.innerHTML = '';
+            announcementGrid.innerHTML = '';
             if (!config.announcements || config.announcements.length === 0) {
-                grid.innerHTML = `<p class="text-slate-400 text-sm col-span-full text-center py-4">ពុំទាន់មានសារជូនដំណឹងនៅឡើយទេ</p>`;
+                announcementGrid.innerHTML = `<p class="text-slate-400 text-sm col-span-full text-center py-4">ពុំទាន់មានសារជូនដំណឹងនៅឡើយទេ</p>`;
                 return;
             }
+
             config.announcements.forEach(item => {
                 const card = document.createElement('div');
-                card.className = 'glass-panel rounded-2xl overflow-hidden shadow-xl border border-white/10 flex flex-col';
+                card.className = 'glass-panel rounded-2xl overflow-hidden shadow-xl border border-white/10 hover:border-amber-400/40 transition-all flex flex-col';
+                
                 card.innerHTML = `
                     ${item.image ? `<div class="h-44 w-full overflow-hidden bg-slate-900 cursor-pointer relative group" onclick="openImageModal('${item.image}')">
-                        <img src="${item.image}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                        <img src="${item.image}" alt="${item.title}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                        <div class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+                            <i class="fa-solid fa-magnifying-glass-plus text-amber-400 text-3xl"></i>
+                        </div>
                     </div>` : ''}
                     <div class="p-5 flex-1 flex flex-col justify-between">
                         <div>
                             <h4 class="text-lg font-bold text-amber-300 mb-2">${item.title}</h4>
                             <p class="text-slate-200 text-sm font-light leading-relaxed">${item.desc}</p>
                         </div>
-                    </div>`;
-                grid.appendChild(card);
+                    </div>
+                `;
+                announcementGrid.appendChild(card);
             });
         }
 
-        // Settings Modal & Admin Actions
-        const settingsModal = document.getElementById('settingsModal');
-        const passwordModal = document.getElementById('passwordModal');
-        const inputPassword = document.getElementById('inputPassword');
-
-        document.getElementById('openSettingsBtn').onclick = () => {
+        openSettingsBtn.addEventListener('click', () => {
             inputPassword.value = '';
-            document.getElementById('passwordError').classList.add('hidden');
+            passwordError.classList.add('hidden');
             passwordModal.classList.remove('hidden');
             inputPassword.focus();
-        };
-        document.getElementById('closePassModalBtn').onclick = () => passwordModal.classList.add('hidden');
+        });
 
-        document.getElementById('passwordForm').onsubmit = (e) => {
+        closePassModalBtn.addEventListener('click', () => {
+            passwordModal.classList.add('hidden');
+        });
+
+        passwordForm.addEventListener('submit', (e) => {
             e.preventDefault();
-            if (inputPassword.value === (config.password || "1234")) {
+            const currentPass = config.password || DEFAULT_PASSWORD;
+            if (inputPassword.value === currentPass) {
                 passwordModal.classList.add('hidden');
                 openSettingsModal();
             } else {
-                document.getElementById('passwordError').classList.remove('hidden');
+                passwordError.classList.remove('hidden');
             }
-        };
+        });
 
         function openSettingsModal() {
-            document.getElementById('inputTitle').value = config.title;
+            inputTitle.value = config.title;
             const dt = new Date(config.targetDateTime);
-            document.getElementById('inputDate').value = dt.toISOString().split('T')[0];
-            document.getElementById('inputTime').value = `${String(dt.getHours()).padStart(2, '0')}:${String(dt.getMinutes()).padStart(2, '0')}`;
-            document.getElementById('inputSchoolLogo').value = (config.schoolLogo && !config.schoolLogo.startsWith('data:')) ? config.schoolLogo : '';
-            document.getElementById('inputSystemUrl').value = config.systemUrl || '';
-            document.getElementById('inputNewPassword').value = '';
+            const dateStr = dt.toISOString().split('T')[0];
+            const hours = String(dt.getHours()).padStart(2, '0');
+            const minutes = String(dt.getMinutes()).padStart(2, '0');
+            
+            inputDate.value = dateStr;
+            inputTime.value = `${hours}:${minutes}`;
+            inputSchoolLogo.value = (config.schoolLogo && !config.schoolLogo.startsWith('data:')) ? config.schoolLogo : '';
+            inputSystemUrl.value = config.systemUrl || '';
+            inputNewPassword.value = '';
+
             renderThumbnails();
             renderAnnouncementEditors();
             settingsModal.classList.remove('hidden');
         }
 
-        document.getElementById('closeSettingsBtn').onclick = () => settingsModal.classList.add('hidden');
+        closeSettingsBtn.addEventListener('click', () => {
+            settingsModal.classList.add('hidden');
+        });
 
         function renderThumbnails() {
-            const c = document.getElementById('thumbContainer');
-            c.innerHTML = '';
+            thumbContainer.innerHTML = '';
             config.photos.forEach((photo, idx) => {
-                const w = document.createElement('div');
-                w.className = 'relative group rounded-lg overflow-hidden h-16 border border-slate-700';
-                w.innerHTML = `<img src="${photo}" class="w-full h-full object-cover">
-                    <button type="button" class="absolute top-1 right-1 bg-red-600 text-white rounded-full w-5 h-5 flex items-center justify-center text-xs opacity-0 group-hover:opacity-100"><i class="fa-solid fa-xmark"></i></button>`;
-                w.querySelector('button').onclick = () => {
+                const wrapper = document.createElement('div');
+                wrapper.className = 'relative group rounded-lg overflow-hidden h-16 border border-slate-700';
+                
+                const img = document.createElement('img');
+                img.src = photo;
+                img.className = 'w-full h-full object-cover';
+
+                const removeBtn = document.createElement('button');
+                removeBtn.type = 'button';
+                removeBtn.className = 'absolute top-1 right-1 bg-red-600 text-white rounded-full w-5 h-5 flex items-center justify-center text-xs opacity-0 group-hover:opacity-100 transition-opacity';
+                removeBtn.innerHTML = '<i class="fa-solid fa-xmark"></i>';
+                removeBtn.onclick = (e) => {
+                    e.stopPropagation();
                     config.photos.splice(idx, 1);
-                    if (config.photos.length === 0) config.photos = [DEFAULT_CONFIG.photos[0]];
+                    if (config.photos.length === 0) config.photos = [DEFAULT_BG];
                     renderThumbnails();
                 };
-                c.appendChild(w);
+
+                wrapper.appendChild(img);
+                wrapper.appendChild(removeBtn);
+                thumbContainer.appendChild(wrapper);
             });
         }
 
-        document.getElementById('addBgUrlBtn').onclick = () => {
-            const url = document.getElementById('inputBgUrl').value.trim();
+        schoolLogoFileInput.addEventListener('change', (e) => {
+            const file = e.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = (event) => {
+                    config.schoolLogo = event.target.result;
+                    inputSchoolLogo.value = '';
+                };
+                reader.readAsDataURL(file);
+            }
+        });
+
+        addBgUrlBtn.addEventListener('click', () => {
+            const url = inputBgUrl.value.trim();
             if (url) {
-                if (config.photos.length === 1 && config.photos[0] === DEFAULT_CONFIG.photos[0]) config.photos = [];
+                if (config.photos.length === 1 && config.photos[0] === DEFAULT_BG) {
+                    config.photos = [];
+                }
                 config.photos.push(url);
-                document.getElementById('inputBgUrl').value = '';
+                inputBgUrl.value = '';
                 renderThumbnails();
             }
-        };
+        });
 
         function renderAnnouncementEditors() {
-            const list = document.getElementById('announcementEditorList');
-            list.innerHTML = '';
+            announcementEditorList.innerHTML = '';
             if (!config.announcements) config.announcements = [];
+
             config.announcements.forEach((item, index) => {
                 const box = document.createElement('div');
-                box.className = 'bg-slate-900 border border-slate-700 p-3 rounded-xl space-y-2';
+                box.className = 'bg-slate-900 border border-slate-700 p-3 rounded-xl space-y-2 relative';
+
                 box.innerHTML = `
                     <div class="flex justify-between items-center mb-1">
                         <span class="text-xs font-bold text-amber-400">សារទី ${toKhmerNum(index + 1)}</span>
-                        <button type="button" class="text-red-400 text-xs delete-announcement-btn"><i class="fa-solid fa-trash"></i> លុប</button>
+                        <button type="button" class="text-red-400 hover:text-red-300 text-xs delete-ann-btn">
+                            <i class="fa-solid fa-trash"></i> លុប
+                        </button>
                     </div>
-                    <input type="text" value="${item.title || ''}" placeholder="ចំណងជើង" class="w-full bg-slate-800 border border-slate-700 rounded-lg px-3 py-1.5 text-xs text-white ann-title" data-index="${index}">
-                    <textarea placeholder="ខ្លឹមសារ" class="w-full bg-slate-800 border border-slate-700 rounded-lg px-3 py-1.5 text-xs text-white h-14 ann-desc" data-index="${index}">${item.desc || ''}</textarea>
-                    <input type="text" value="${item.image || ''}" placeholder="Image URL" class="w-full bg-slate-800 border border-slate-700 rounded-lg px-3 py-1.5 text-xs text-white ann-img" data-index="${index}">`;
-                
-                box.querySelector('.delete-announcement-btn').onclick = () => {
+                    <input type="text" value="${item.title || ''}" placeholder="ចំណងជើងសារ" class="w-full bg-slate-800 border border-slate-700 rounded-lg px-3 py-1.5 text-xs text-white ann-title">
+                    <textarea placeholder="ខ្លឹមសារសារជូនដំណឹង" class="w-full bg-slate-800 border border-slate-700 rounded-lg px-3 py-1.5 text-xs text-white h-16 ann-desc">${item.desc || ''}</textarea>
+                    <input type="text" value="${item.image || ''}" placeholder="Image URL" class="w-full bg-slate-800 border border-slate-700 rounded-lg px-3 py-1.5 text-xs text-white ann-img">
+                `;
+
+                box.querySelector('.delete-ann-btn').onclick = () => {
                     config.announcements.splice(index, 1);
                     renderAnnouncementEditors();
                 };
-                list.appendChild(box);
+
+                announcementEditorList.appendChild(box);
             });
         }
 
-        document.getElementById('addAnnouncementBtn').onclick = () => {
+        addAnnouncementBtn.addEventListener('click', () => {
             if (!config.announcements) config.announcements = [];
-            config.announcements.push({ id: Date.now(), title: "សារថ្មី", desc: "", image: "" });
+            config.announcements.push({
+                id: Date.now(),
+                title: "សារជូនដំណឹងថ្មី",
+                desc: "",
+                image: ""
+            });
             renderAnnouncementEditors();
-        };
+        });
 
-        document.getElementById('settingsForm').onsubmit = async (e) => {
+        photoInput.addEventListener('change', (e) => {
+            const files = Array.from(e.target.files);
+            if (!files.length) return;
+
+            if (config.photos.length === 1 && config.photos[0] === DEFAULT_BG) {
+                config.photos = [];
+            }
+
+            files.forEach(file => {
+                const reader = new FileReader();
+                reader.onload = (event) => {
+                    config.photos.push(event.target.result);
+                    renderThumbnails();
+                };
+                reader.readAsDataURL(file);
+            });
+        });
+
+        settingsForm.addEventListener('submit', async (e) => {
             e.preventDefault();
-            config.title = document.getElementById('inputTitle').value;
-            config.targetDateTime = `${document.getElementById('inputDate').value}T${document.getElementById('inputTime').value}`;
-            config.systemUrl = document.getElementById('inputSystemUrl').value;
-            
-            // Collect updated announcement values from DOM inputs directly
-            const titles = document.querySelectorAll('.ann-title');
-            const descs = document.querySelectorAll('.ann-desc');
-            const imgs = document.querySelectorAll('.ann-img');
-            
+            config.title = inputTitle.value;
+            config.targetDateTime = `${inputDate.value}T${inputTime.value}`;
+            config.systemUrl = inputSystemUrl.value;
+
+            // Collect announcements directly from DOM inputs
+            const titles = announcementEditorList.querySelectorAll('.ann-title');
+            const descs = announcementEditorList.querySelectorAll('.ann-desc');
+            const imgs = announcementEditorList.querySelectorAll('.ann-img');
+
             if (titles.length > 0) {
                 config.announcements = [];
                 for (let i = 0; i < titles.length; i++) {
@@ -535,50 +858,64 @@
                         image: imgs[i].value
                     });
                 }
+            } else {
+                config.announcements = [];
             }
 
-            const logo = document.getElementById('inputSchoolLogo').value.trim();
-            if (logo !== "") {
-                config.schoolLogo = logo;
+            if (inputSchoolLogo.value.trim() !== '') {
+                config.schoolLogo = inputSchoolLogo.value.trim();
             }
 
-            const pass = document.getElementById('inputNewPassword').value.trim();
-            if (pass !== "") {
-                config.password = pass;
+            if (inputNewPassword.value.trim() !== '') {
+                config.password = inputNewPassword.value.trim();
             }
 
-            // Save to Firebase Firestore
+            // Save to Firebase Firestore (Real-Time Sync)
             try {
                 await setDoc(docRef, config);
-                alert("រក្សាទុកនិងធ្វើបច្ចុប្បន្នភាព Real-Time ដោយជោគជ័យ!");
+                alert("រក្សាទុក និងធ្វើបច្ចុប្បន្នភាព Real-Time ដោយជោគជ័យ!");
                 settingsModal.classList.add('hidden');
             } catch (err) {
                 alert("មានបញ្ហាក្នុងការរក្សាទុក៖ " + err.message);
             }
-        };
+        });
 
-        document.getElementById('resetBtn').onclick = async () => {
+        resetBtn.addEventListener('click', async () => {
             if (confirm("តើអ្នកពិតជាចង់កំណត់ទិន្នន័យដើមមែនទេ?")) {
-                await setDoc(docRef, DEFAULT_CONFIG);
-                settingsModal.classList.add('hidden');
+                config = {
+                    title: DEFAULT_TITLE,
+                    targetDateTime: DEFAULT_DATE,
+                    photos: [DEFAULT_BG],
+                    schoolLogo: DEFAULT_LOGO,
+                    password: DEFAULT_PASSWORD,
+                    systemUrl: DEFAULT_SYSTEM_URL,
+                    announcements: DEFAULT_ANNOUNCEMENTS
+                };
+                try {
+                    await setDoc(docRef, config);
+                    settingsModal.classList.add('hidden');
+                } catch (err) {
+                    alert("Error: " + err.message);
+                }
             }
-        };
+        });
 
-        document.getElementById('fullscreenBtn').onclick = () => {
+        fullscreenBtn.addEventListener('click', () => {
             if (!document.fullscreenElement) {
-                document.documentElement.requestFullscreen();
-                document.getElementById('fullscreenIcon').className = "fa-solid fa-compress text-amber-400";
+                document.documentElement.requestFullscreen().catch(err => console.log(err));
+                fullscreenIcon.className = "fa-solid fa-compress text-amber-400";
+                fullscreenText.textContent = "បង្រួមអេក្រង់";
             } else {
-                document.exitFullscreen();
-                document.getElementById('fullscreenIcon').className = "fa-solid fa-expand text-amber-400";
+                if (document.exitFullscreen) {
+                    document.exitFullscreen();
+                    fullscreenIcon.className = "fa-solid fa-expand text-amber-400";
+                    fullscreenText.textContent = "ពេញអេក្រង់";
+                }
             }
-        };
+        });
 
-        window.openImageModal = (src) => {
-            document.getElementById('modalImage').src = src;
-            document.getElementById('imageModal').classList.remove('hidden');
-        };
-        window.closeImageModal = () => document.getElementById('imageModal').classList.add('hidden');
+        nextSlide.addEventListener('click', nextSlideImage);
+        prevSlide.addEventListener('click', prevSlideImage);
     </script>
 </body>
 </html>
