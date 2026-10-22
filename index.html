@@ -82,12 +82,6 @@
             </div>
             
             <div class="flex items-center gap-2">
-                <!-- Notification Permission Button -->
-                <button id="notifPermissionBtn" onclick="requestNotificationPermission()" class="glass-card hover:bg-white/25 transition-all text-amber-300 px-3 py-2.5 rounded-full flex items-center gap-2 text-xs font-semibold shadow-lg">
-                    <i class="fa-solid fa-bell"></i>
-                    <span class="hidden sm:inline">បើកដំណឹង</span>
-                </button>
-
                 <!-- PWA Install Button -->
                 <button id="installAppBtn" class="bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-400 hover:to-amber-500 text-slate-950 font-bold px-4 py-2.5 rounded-full flex items-center gap-2 text-sm shadow-lg hover:scale-105 active:scale-95 transition-all hidden">
                     <i class="fa-solid fa-download"></i>
@@ -226,7 +220,7 @@
             
             <div class="flex justify-between items-center mb-6 border-b border-slate-800 pb-4">
                 <h3 class="text-xl font-bold flex items-center gap-2 text-amber-400">
-                    <i class="fa-solid fa-sliders"></i> ការកំណត់ប្រព័ន្ធ & រូបថត (Real-Time Sync)
+                    <i class="fa-solid fa-sliders"></i> ការកំណត់ប្រព័ន្ធ & រូបថត
                 </h3>
                 <button id="closeSettingsBtn" class="text-slate-400 hover:text-white text-xl">
                     <i class="fa-solid fa-xmark"></i>
@@ -330,33 +324,15 @@
                         កំណត់ដើម
                     </button>
                     <button type="submit" id="saveSettingsBtn" class="w-2/3 bg-amber-400 hover:bg-amber-500 text-slate-950 font-bold py-3 rounded-xl shadow-lg text-sm transition-all">
-                        រក្សាទុក (Real-Time Sync)
+                        រក្សាទុក
                     </button>
                 </div>
             </form>
         </div>
     </div>
 
-    <!-- JAVASCRIPT & FIREBASE REAL-TIME LOGIC -->
-    <script type="module">
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
-        import { getFirestore, doc, setDoc, onSnapshot } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
-
-        // Firebase Configuration (បានភ្ជាប់រួចជាស្រេច)
-        const firebaseConfig = {
-            apiKey: "AIzaSyD6U01ENfwYI4-2yqrRrFjpo-470sEhOtw",
-            authDomain: "bacii-countdown.firebaseapp.com",
-            projectId: "bacii-countdown",
-            storageBucket: "bacii-countdown.firebasestorage.app",
-            messagingSenderId: "788227235069",
-            appId: "1:788227235069:web:55e04629c67268e7967294",
-            measurementId: "G-JYFZED4QY7"
-        };
-
-        const app = initializeApp(firebaseConfig);
-        const db = getFirestore(app);
-        const docRef = doc(db, "settings", "countdown_data");
-
+    <!-- JAVASCRIPT LOGIC & PWA DYNAMIC REGISTRATION -->
+    <script>
         // --- PWA SERVICE WORKER ---
         if ('serviceWorker' in navigator) {
             const swCode = `
@@ -388,7 +364,7 @@
             }
         });
 
-        // --- APP LOGIC & REAL-TIME SYNC ---
+        // --- APP LOGIC & DYNAMIC MANIFEST ---
         const KHMER_DIGITS = ['០', '១', '២', '៣', '៤', '៥', '៦', '៧', '៨', '៩'];
         const KHMER_DAYS = ['អាទិត្យ', 'ចន្ទ', 'អង្គារ', 'ពុធ', 'ព្រហស្បតិ៍', 'សុក្រ', 'សៅរ៍'];
         const KHMER_MONTHS = ['មករា', 'កុម្ភៈ', 'មីនា', 'មេសា', 'ឧសភា', 'មិថុនា', 'កក្កដា', 'សីហា', 'កញ្ញា', 'តុលា', 'វិច្ឆិកា', 'ធ្នូ'];
@@ -501,27 +477,22 @@
         const announcementEditorList = document.getElementById('announcementEditorList');
         const addAnnouncementBtn = document.getElementById('addAnnouncementBtn');
 
-        // Real-Time Listener (Firestore onSnapshot)
-        onSnapshot(docRef, (docSnap) => {
-            if (docSnap.exists()) {
-                const data = docSnap.data();
-                config = { ...config, ...data };
-                updateUI();
-            } else {
-                setDoc(docRef, config);
+        function loadSettings() {
+            const saved = localStorage.getItem('countdown_config');
+            if (saved) {
+                try {
+                    const parsed = JSON.parse(saved);
+                    config = { ...config, ...parsed };
+                } catch (e) {
+                    console.error('Failed to parse saved config', e);
+                }
             }
-        });
+            updateUI();
+        }
 
-        window.requestNotificationPermission = async () => {
-            if (!("Notification" in window)) {
-                alert("Browser របស់អ្នកមិនគាំទ្រ Notification ទេ!");
-                return;
-            }
-            const permission = await Notification.requestPermission();
-            if (permission === "granted") {
-                alert("ការផ្ដល់ដំណឹង (Notification) ត្រូវបានបើកដោយជោគជ័យ!");
-            }
-        };
+        function saveSettings() {
+            localStorage.setItem('countdown_config', JSON.stringify(config));
+        }
 
         function updateManifest() {
             const existingManifest = document.getElementById('pwaManifest');
@@ -790,23 +761,45 @@
                 box.innerHTML = `
                     <div class="flex justify-between items-center mb-1">
                         <span class="text-xs font-bold text-amber-400">សារទី ${toKhmerNum(index + 1)}</span>
-                        <button type="button" class="text-red-400 hover:text-red-300 text-xs delete-ann-btn">
+                        <button type="button" onclick="deleteAnnouncement(${index})" class="text-red-400 hover:text-red-300 text-xs">
                             <i class="fa-solid fa-trash"></i> លុប
                         </button>
                     </div>
-                    <input type="text" value="${item.title || ''}" placeholder="ចំណងជើងសារ" class="w-full bg-slate-800 border border-slate-700 rounded-lg px-3 py-1.5 text-xs text-white ann-title">
-                    <textarea placeholder="ខ្លឹមសារសារជូនដំណឹង" class="w-full bg-slate-800 border border-slate-700 rounded-lg px-3 py-1.5 text-xs text-white h-16 ann-desc">${item.desc || ''}</textarea>
-                    <input type="text" value="${item.image || ''}" placeholder="Image URL" class="w-full bg-slate-800 border border-slate-700 rounded-lg px-3 py-1.5 text-xs text-white ann-img">
+                    <input type="text" value="${item.title || ''}" onchange="updateAnnouncementData(${index}, 'title', this.value)" placeholder="ចំណងជើងសារ" class="w-full bg-slate-800 border border-slate-700 rounded-lg px-3 py-1.5 text-xs text-white">
+                    <textarea onchange="updateAnnouncementData(${index}, 'desc', this.value)" placeholder="ខ្លឹមសារសារជូនដំណឹង" class="w-full bg-slate-800 border border-slate-700 rounded-lg px-3 py-1.5 text-xs text-white h-16">${item.desc || ''}</textarea>
+                    
+                    <div class="flex items-center gap-2">
+                        <input type="text" value="${item.image || ''}" onchange="updateAnnouncementData(${index}, 'image', this.value)" placeholder="Image URL ឬ Upload រូបភាព" class="w-full bg-slate-800 border border-slate-700 rounded-lg px-3 py-1.5 text-xs text-white">
+                        <label class="bg-slate-700 hover:bg-slate-600 text-white text-xs px-3 py-1.5 rounded-lg cursor-pointer flex-shrink-0">
+                            Upload
+                            <input type="file" accept="image/*,.gif" class="hidden" onchange="uploadAnnouncementImage(event, ${index})">
+                        </label>
+                    </div>
                 `;
-
-                box.querySelector('.delete-ann-btn').onclick = () => {
-                    config.announcements.splice(index, 1);
-                    renderAnnouncementEditors();
-                };
-
                 announcementEditorList.appendChild(box);
             });
         }
+
+        window.updateAnnouncementData = (index, key, value) => {
+            config.announcements[index][key] = value;
+        };
+
+        window.deleteAnnouncement = (index) => {
+            config.announcements.splice(index, 1);
+            renderAnnouncementEditors();
+        };
+
+        window.uploadAnnouncementImage = (event, index) => {
+            const file = event.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = (e) => {
+                    config.announcements[index].image = e.target.result;
+                    renderAnnouncementEditors();
+                };
+                reader.readAsDataURL(file);
+            }
+        };
 
         addAnnouncementBtn.addEventListener('click', () => {
             if (!config.announcements) config.announcements = [];
@@ -837,30 +830,11 @@
             });
         });
 
-        settingsForm.addEventListener('submit', async (e) => {
+        settingsForm.addEventListener('submit', (e) => {
             e.preventDefault();
             config.title = inputTitle.value;
             config.targetDateTime = `${inputDate.value}T${inputTime.value}`;
             config.systemUrl = inputSystemUrl.value;
-
-            // Collect announcements directly from DOM inputs
-            const titles = announcementEditorList.querySelectorAll('.ann-title');
-            const descs = announcementEditorList.querySelectorAll('.ann-desc');
-            const imgs = announcementEditorList.querySelectorAll('.ann-img');
-
-            if (titles.length > 0) {
-                config.announcements = [];
-                for (let i = 0; i < titles.length; i++) {
-                    config.announcements.push({
-                        id: Date.now() + i,
-                        title: titles[i].value,
-                        desc: descs[i].value,
-                        image: imgs[i].value
-                    });
-                }
-            } else {
-                config.announcements = [];
-            }
 
             if (inputSchoolLogo.value.trim() !== '') {
                 config.schoolLogo = inputSchoolLogo.value.trim();
@@ -870,34 +844,24 @@
                 config.password = inputNewPassword.value.trim();
             }
 
-            // Save to Firebase Firestore (Real-Time Sync)
-            try {
-                await setDoc(docRef, config);
-                alert("រក្សាទុក និងធ្វើបច្ចុប្បន្នភាព Real-Time ដោយជោគជ័យ!");
-                settingsModal.classList.add('hidden');
-            } catch (err) {
-                alert("មានបញ្ហាក្នុងការរក្សាទុក៖ " + err.message);
-            }
+            saveSettings();
+            updateUI();
+            settingsModal.classList.add('hidden');
         });
 
-        resetBtn.addEventListener('click', async () => {
-            if (confirm("តើអ្នកពិតជាចង់កំណត់ទិន្នន័យដើមមែនទេ?")) {
-                config = {
-                    title: DEFAULT_TITLE,
-                    targetDateTime: DEFAULT_DATE,
-                    photos: [DEFAULT_BG],
-                    schoolLogo: DEFAULT_LOGO,
-                    password: DEFAULT_PASSWORD,
-                    systemUrl: DEFAULT_SYSTEM_URL,
-                    announcements: DEFAULT_ANNOUNCEMENTS
-                };
-                try {
-                    await setDoc(docRef, config);
-                    settingsModal.classList.add('hidden');
-                } catch (err) {
-                    alert("Error: " + err.message);
-                }
-            }
+        resetBtn.addEventListener('click', () => {
+            config = {
+                title: DEFAULT_TITLE,
+                targetDateTime: DEFAULT_DATE,
+                photos: [DEFAULT_BG],
+                schoolLogo: DEFAULT_LOGO,
+                password: DEFAULT_PASSWORD,
+                systemUrl: DEFAULT_SYSTEM_URL,
+                announcements: DEFAULT_ANNOUNCEMENTS
+            };
+            saveSettings();
+            updateUI();
+            settingsModal.classList.add('hidden');
         });
 
         fullscreenBtn.addEventListener('click', () => {
@@ -916,6 +880,10 @@
 
         nextSlide.addEventListener('click', nextSlideImage);
         prevSlide.addEventListener('click', prevSlideImage);
+
+        window.onload = () => {
+            loadSettings();
+        };
     </script>
 </body>
 </html>
