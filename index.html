@@ -245,8 +245,14 @@
                     <input type="url" id="inputSystemUrl" placeholder="https://..." class="w-full bg-slate-800 border border-slate-700 rounded-xl px-4 py-2.5 text-white text-sm">
                 </div>
 
+                <!-- បន្ថែមថ្មីសម្រាប់ Link ចុះឈ្មោះសិស្ស -->
                 <div class="bg-slate-800/40 p-4 rounded-2xl border border-slate-700/50 space-y-3">
-                    <h4 class="text-amber-300 font-bold text-sm"><i class="fa-solid fa-image"></i> ៤. រូបថត Background</h4>
+                    <h4 class="text-amber-300 font-bold text-sm"><i class="fa-solid fa-user-plus"></i> ៤. តំណភ្ជាប់ប្រព័ន្ធចុះឈ្មោះសិស្ស</h4>
+                    <input type="url" id="inputStudentRegUrl" placeholder="https://..." class="w-full bg-slate-800 border border-slate-700 rounded-xl px-4 py-2.5 text-white text-sm">
+                </div>
+
+                <div class="bg-slate-800/40 p-4 rounded-2xl border border-slate-700/50 space-y-3">
+                    <h4 class="text-amber-300 font-bold text-sm"><i class="fa-solid fa-image"></i> ៥. រូបថត Background</h4>
                     <div class="flex gap-2">
                         <input type="url" id="inputBgUrl" placeholder="Link រូបភាព ឬ GIF" class="w-full bg-slate-800 border border-slate-700 rounded-xl px-3 py-2 text-xs text-white">
                         <button type="button" id="addBgUrlBtn" class="bg-amber-400/20 text-amber-300 text-xs px-4 py-2 rounded-xl border border-amber-400/30 font-semibold">បន្ថែម</button>
@@ -261,14 +267,14 @@
 
                 <div class="bg-slate-800/40 p-4 rounded-2xl border border-slate-700/50 space-y-3">
                     <div class="flex justify-between items-center">
-                        <h4 class="text-amber-300 font-bold text-sm"><i class="fa-solid fa-bullhorn"></i> ៥. គ្រប់គ្រងសារជូនដំណឹងដល់សិស្ស</h4>
+                        <h4 class="text-amber-300 font-bold text-sm"><i class="fa-solid fa-bullhorn"></i> ៦. គ្រប់គ្រងសារជូនដំណឹងដល់សិស្ស</h4>
                         <button type="button" id="addAnnouncementBtn" class="bg-amber-400/25 text-amber-300 text-xs px-3 py-1.5 rounded-lg border border-amber-400/30"><i class="fa-solid fa-plus"></i> បន្ថែមសារថ្មី</button>
                     </div>
                     <div id="announcementEditorList" class="space-y-3 max-h-60 overflow-y-auto pr-1"></div>
                 </div>
 
                 <div class="bg-slate-800/40 p-4 rounded-2xl border border-slate-700/50 space-y-3">
-                    <h4 class="text-amber-300 font-bold text-sm"><i class="fa-solid fa-key"></i> ៦. ប្ដូរលេខកូដសម្ងាត់</h4>
+                    <h4 class="text-amber-300 font-bold text-sm"><i class="fa-solid fa-key"></i> ៧. ប្ដូរលេខកូដសម្ងាត់</h4>
                     <input type="password" id="inputNewPassword" placeholder="លេខកូដថ្មី (ទុកទទេបើមិនប្ដូរ)" class="w-full bg-slate-800 border border-slate-700 rounded-xl px-4 py-2.5 text-white text-sm">
                 </div>
             </div>
@@ -354,6 +360,7 @@
         const DEFAULT_LOGO = "https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/svgs/solid/hourglass-half.svg";
         const DEFAULT_PASSWORD = "1234";
         const DEFAULT_SYSTEM_URL = "https://google.com";
+        const DEFAULT_STUDENT_REG_URL = "https://google.com";
 
         const DEFAULT_ANNOUNCEMENTS = [
             {
@@ -371,6 +378,7 @@
             schoolLogo: DEFAULT_LOGO,
             password: DEFAULT_PASSWORD,
             systemUrl: DEFAULT_SYSTEM_URL,
+            studentRegUrl: DEFAULT_STUDENT_REG_URL,
             announcements: DEFAULT_ANNOUNCEMENTS,
             lastUpdated: Date.now()
         };
@@ -419,6 +427,7 @@
         const resetBtn = document.getElementById('resetBtn');
 
         const systemLinkBtn = document.getElementById('systemLinkBtn');
+        const studentRegBtn = document.getElementById('studentRegBtn');
         const studentRegBtn = document.getElementById('studentRegBtn');
         const fullscreenBtn = document.getElementById('fullscreenBtn');
         const fullscreenIcon = document.getElementById('fullscreenIcon');
@@ -490,7 +499,7 @@
             // កំណត់ឱ្យបង្ហាញតែពាក្យ "ចំនួនថ្ងៃនៅសល់" ថេរ
             targetDateSubtitle.textContent = "ចំនួនថ្ងៃនៅសល់";
             systemLinkBtn.href = config.systemUrl || '#';
-            studentRegBtn.href = config.systemUrl || '#';
+            studentRegBtn.href = config.studentRegUrl || '#';
             headerLogo.src = processImageUrl(config.schoolLogo) || DEFAULT_LOGO;
         
             updateManifest();
@@ -654,6 +663,7 @@
             inputTime.value = `${hours}:${minutes}`;
             inputSchoolLogo.value = (config.schoolLogo && !config.schoolLogo.startsWith('data:')) ? config.schoolLogo : '';
             inputSystemUrl.value = config.systemUrl || '';
+            inputStudentRegUrl.value = config.studentRegUrl || '';
             inputNewPassword.value = '';
 
             renderThumbnails();
@@ -803,6 +813,7 @@
             config.title = inputTitle.value;
             config.targetDateTime = `${inputDate.value}T${inputTime.value}`;
             config.systemUrl = inputSystemUrl.value;
+            config.studentRegUrl = inputStudentRegUrl.value;
 
             // Collect announcements from DOM and preserve uploaded base64 images if inputs didn't change
             const titles = announcementEditorList.querySelectorAll('.ann-title');
@@ -854,6 +865,7 @@
                     schoolLogo: DEFAULT_LOGO,
                     password: DEFAULT_PASSWORD,
                     systemUrl: DEFAULT_SYSTEM_URL,
+                    studentRegUrl: DEFAULT_STUDENT_REG_URL,
                     announcements: DEFAULT_ANNOUNCEMENTS,
                     lastUpdated: Date.now()
                 };
