@@ -258,23 +258,29 @@
                         <div class="border-2 border-dashed border-slate-700 hover:border-amber-400/50 rounded-2xl p-3 text-center cursor-pointer bg-slate-800/50" onclick="document.getElementById('schoolLogoFileInput').click()">
                             <i class="fa-solid fa-cloud-arrow-up text-xl text-amber-400 mb-1"></i>
                             <p class="text-xs text-slate-300">ឬ Upload Logo សាលាពីកុំព្យូទ័រ/ទូរស័ព្ទ</p>
+                            <p class="text-[11px] text-amber-400 font-bold mt-1">⚠️ (ទំហំឯកសារត្រូវតូចជាង 1MB)</p>
                         </div>
                         <input type="file" id="schoolLogoFileInput" accept="image/*" class="hidden">
                     </div>
 
                     <div class="bg-slate-800/40 p-4 rounded-2xl border border-slate-700/50 space-y-3">
-                        <h4 class="text-amber-300 font-bold text-sm"><i class="fa-solid fa-link"></i> ៣. តំណភ្ជាប់ប្រព័ន្ធពិន្ទុ</h4>
-                        <input type="url" id="inputSystemUrl" placeholder="https://..." class="w-full bg-slate-800 border border-slate-700 rounded-xl px-4 py-2.5 text-white text-sm">
-                    </div>
-
-                    <div class="bg-slate-800/40 p-4 rounded-2xl border border-slate-700/50 space-y-3">
-                        <h4 class="text-amber-300 font-bold text-sm"><i class="fa-solid fa-user-plus"></i> ៤. តំណភ្ជាប់ប្រព័ន្ធចុះឈ្មោះសិស្ស</h4>
-                        <input type="url" id="inputStudentRegUrl" placeholder="https://..." class="w-full bg-slate-800 border border-slate-700 rounded-xl px-4 py-2.5 text-white text-sm">
+                        <h4 class="text-amber-300 font-bold text-sm"><i class="fa-solid fa-image"></i> ៣. រូបថត Background</h4>
+                        <div class="flex gap-2">
+                            <input type="url" id="inputBgUrl" placeholder="Link រូបភាព ឬ GIF" class="w-full bg-slate-800 border border-slate-700 rounded-xl px-3 py-2 text-xs text-white">
+                            <button type="button" id="addBgUrlBtn" class="bg-amber-400/20 text-amber-300 text-xs px-4 py-2 rounded-xl border border-amber-400/30 font-semibold">បន្ថែម</button>
+                        </div>
+                        <div class="border-2 border-dashed border-slate-700 hover:border-amber-400/50 rounded-2xl p-3 text-center cursor-pointer bg-slate-800/50" onclick="document.getElementById('photoInput').click()">
+                            <i class="fa-solid fa-cloud-arrow-up text-xl text-amber-400 mb-1"></i>
+                            <p class="text-xs text-slate-300">ឬ Upload រូប Background ពីកុំព្យូទ័រ/ទូរស័ព្ទ</p>
+                            <p class="text-[11px] text-amber-400 font-bold mt-1">⚠️ (ទំហំឯកសារត្រូវតូចជាង 1MB)</p>
+                        </div>
+                        <input type="file" id="photoInput" multiple accept="image/*,.gif" class="hidden">
+                        <div id="thumbContainer" class="grid grid-cols-4 gap-2 mt-2 max-h-28 overflow-y-auto"></div>
                     </div>
 
                     <!-- BACKGROUND MUSIC SETTING (UPLOAD ONLY & SIZE WARNING) -->
                     <div class="bg-slate-800/40 p-4 rounded-2xl border border-slate-700/50 space-y-3">
-                        <h4 class="text-amber-300 font-bold text-sm"><i class="fa-solid fa-music"></i> ៥. បទចម្រៀងផ្ទៃខាងក្រោយ (Upload ឯកសារ MP3 / MP4)</h4>
+                        <h4 class="text-amber-300 font-bold text-sm"><i class="fa-solid fa-music"></i> ៤. បទចម្រៀងផ្ទៃខាងក្រោយ (Upload ឯកសារ MP3 / MP4)</h4>
                         <div class="border-2 border-dashed border-slate-700 hover:border-amber-400/50 rounded-2xl p-3 text-center cursor-pointer bg-slate-800/50" onclick="document.getElementById('musicFileInput').click()">
                             <i class="fa-solid fa-cloud-arrow-up text-xl text-amber-400 mb-1"></i>
                             <p class="text-xs text-slate-300">Upload ឯកសារ MP3 / MP4 ពីទូរស័ព្ទ/កុំព្យូទ័រ</p>
@@ -284,27 +290,23 @@
                         <div id="musicFileInfo" class="text-[11px] text-amber-400 truncate"></div>
                     </div>
 
-                    <!-- CUSTOM MENU BUTTONS MANAGEMENT -->
                     <div class="bg-slate-800/40 p-4 rounded-2xl border border-slate-700/50 space-y-3">
-                        <div class="flex justify-between items-center">
-                            <h4 class="text-amber-300 font-bold text-sm"><i class="fa-solid fa-bars-progress"></i> ៦. បន្ថែមប៊ូតុងថ្មីក្នុង Menu</h4>
-                            <button type="button" id="addCustomMenuBtn" class="bg-amber-400/25 text-amber-300 text-xs px-3 py-1.5 rounded-lg border border-amber-400/30"><i class="fa-solid fa-plus"></i> បន្ថែមប៊ូតុង</button>
-                        </div>
-                        <div id="customButtonEditorList" class="space-y-3 max-h-48 overflow-y-auto pr-1"></div>
+                        <h4 class="text-amber-300 font-bold text-sm"><i class="fa-solid fa-link"></i> ៥. តំណភ្ជាប់ប្រព័ន្ធគ្រប់គ្រងពិន្ទុ</h4>
+                        <input type="url" id="inputSystemUrl" placeholder="https://..." class="w-full bg-slate-800 border border-slate-700 rounded-xl px-4 py-2.5 text-white text-sm">
                     </div>
 
                     <div class="bg-slate-800/40 p-4 rounded-2xl border border-slate-700/50 space-y-3">
-                        <h4 class="text-amber-300 font-bold text-sm"><i class="fa-solid fa-image"></i> ៧. រូបថត Background</h4>
-                        <div class="flex gap-2">
-                            <input type="url" id="inputBgUrl" placeholder="Link រូបភាព ឬ GIF" class="w-full bg-slate-800 border border-slate-700 rounded-xl px-3 py-2 text-xs text-white">
-                            <button type="button" id="addBgUrlBtn" class="bg-amber-400/20 text-amber-300 text-xs px-4 py-2 rounded-xl border border-amber-400/30 font-semibold">បន្ថែម</button>
+                        <h4 class="text-amber-300 font-bold text-sm"><i class="fa-solid fa-user-plus"></i> ៦. តំណភ្ជាប់ប្រព័ន្ធចុះឈ្មោះសិស្ស</h4>
+                        <input type="url" id="inputStudentRegUrl" placeholder="https://..." class="w-full bg-slate-800 border border-slate-700 rounded-xl px-4 py-2.5 text-white text-sm">
+                    </div>
+
+                    <!-- CUSTOM MENU BUTTONS MANAGEMENT -->
+                    <div class="bg-slate-800/40 p-4 rounded-2xl border border-slate-700/50 space-y-3">
+                        <div class="flex justify-between items-center">
+                            <h4 class="text-amber-300 font-bold text-sm"><i class="fa-solid fa-bars-progress"></i> ៧. បន្ថែមប៊ូតុងថ្មីក្នុង Menu</h4>
+                            <button type="button" id="addCustomMenuBtn" class="bg-amber-400/25 text-amber-300 text-xs px-3 py-1.5 rounded-lg border border-amber-400/30"><i class="fa-solid fa-plus"></i> បន្ថែមប៊ូតុង</button>
                         </div>
-                        <div class="border-2 border-dashed border-slate-700 hover:border-amber-400/50 rounded-2xl p-3 text-center cursor-pointer bg-slate-800/50" onclick="document.getElementById('photoInput').click()">
-                            <i class="fa-solid fa-cloud-arrow-up text-xl text-amber-400 mb-1"></i>
-                            <p class="text-xs text-slate-300">ឬ Upload រូប Background ពីកុំព្យូទ័រ/ទូរស័ព្ទ</p>
-                        </div>
-                        <input type="file" id="photoInput" multiple accept="image/*,.gif" class="hidden">
-                        <div id="thumbContainer" class="grid grid-cols-4 gap-2 mt-2 max-h-28 overflow-y-auto"></div>
+                        <div id="customButtonEditorList" class="space-y-3 max-h-48 overflow-y-auto pr-1"></div>
                     </div>
 
                     <div class="bg-slate-800/40 p-4 rounded-2xl border border-slate-700/50 space-y-3">
