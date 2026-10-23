@@ -899,7 +899,7 @@
 
         addCustomMenuBtn.addEventListener('click', () => {
             if (!config.customButtons) config.customButtons = [];
-            config.customButtons.push({
+            config.customButtons.unshift({
                 name: "ប៊ូតុងថ្មី",
                 url: "https://"
             });
