@@ -128,11 +128,6 @@
                 <button id="installAppBtn" title="ដំឡើង App" class="bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-400 hover:to-amber-500 text-slate-950 font-bold p-2.5 rounded-full flex items-center justify-center text-base shadow-lg hover:scale-105 active:scale-95 transition-all hidden">
                     <i class="fa-solid fa-download"></i>
                 </button>
-
-                <!-- Fullscreen Button (No Highlight) -->
-                <button id="fullscreenBtn" title="ពេញអេក្រង់" class="hover:bg-white/10 transition-all text-white p-2.5 rounded-full flex items-center justify-center text-base hover:scale-105 active:scale-95">
-                    <i class="fa-solid fa-expand text-amber-400 text-lg" id="fullscreenIcon"></i>
-                </button>
             </div>
         </header>
 
@@ -1059,20 +1054,6 @@
                     settingsModal.classList.add('hidden');
                 } catch (err) {
                     alert("Error: " + err.message);
-                }
-            }
-        });
-
-        fullscreenBtn.addEventListener('click', () => {
-            if (!document.fullscreenElement) {
-                document.documentElement.requestFullscreen().catch(err => console.log(err));
-                fullscreenIcon.className = "fa-solid fa-compress text-amber-400";
-                fullscreenBtn.title = "បង្រួមអេក្រង់";
-            } else {
-                if (document.exitFullscreen) {
-                    document.exitFullscreen();
-                    fullscreenIcon.className = "fa-solid fa-expand text-amber-400";
-                    fullscreenBtn.title = "ពេញអេក្រង់";
                 }
             }
         });
