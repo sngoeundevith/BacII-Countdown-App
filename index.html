@@ -91,10 +91,28 @@
     <div class="relative z-20 min-h-screen flex flex-col justify-between p-4 md:p-8 max-w-7xl mx-auto">
 
         <!-- Top Navigation Header -->
-        <header class="flex flex-wrap justify-between items-center gap-3 w-full">
-            <div class="flex items-center space-x-3 bg-slate-900/80 backdrop-blur-md px-4 py-2.5 rounded-full border border-amber-500/30 shadow-lg">
-                <img id="headerLogo" src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/svgs/solid/hourglass-half.svg" alt="Logo" class="w-6 h-6 object-contain rounded-full bg-amber-400/20 p-0.5">
-                <span class="font-bold text-sm md:text-base tracking-wide text-amber-300">វិទ្យាល័យសម្ដេចក្រឡាហោម ស ខេង តាគ្រាម</span>
+        <header class="flex flex-wrap justify-between items-center gap-3 w-full relative">
+            <div class="flex items-center space-x-3">
+                <!-- Menu Button (Hamburger) -->
+                <div class="relative">
+                    <button id="menuBtn" class="glass-card hover:bg-white/25 transition-all text-white p-3 rounded-full flex items-center justify-center text-base shadow-lg hover:scale-105 active:scale-95 border border-amber-400/40">
+                        <i class="fa-solid fa-bars text-amber-300"></i>
+                    </button>
+
+                    <!-- Menu Dropdown -->
+                    <div id="menuDropdown" class="absolute top-14 left-0 bg-slate-900/95 backdrop-blur-md border border-amber-500/30 rounded-2xl shadow-2xl p-2 w-64 z-50 hidden flex flex-col gap-1">
+                        <button id="openSettingsMenuBtn" class="w-full text-left px-4 py-2.5 rounded-xl hover:bg-amber-400/20 text-amber-300 font-semibold flex items-center gap-3 transition-all">
+                            <i class="fa-solid fa-lock"></i>
+                            <span>ការកំណត់</span>
+                        </button>
+                        <div id="customMenuButtons" class="flex flex-col gap-1"></div>
+                    </div>
+                </div>
+
+                <div class="flex items-center space-x-3 bg-slate-900/80 backdrop-blur-md px-4 py-2.5 rounded-full border border-amber-500/30 shadow-lg">
+                    <img id="headerLogo" src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/svgs/solid/hourglass-half.svg" alt="Logo" class="w-6 h-6 object-contain rounded-full bg-amber-400/20 p-0.5">
+                    <span class="font-bold text-sm md:text-base tracking-wide text-amber-300">វិទ្យាល័យសម្ដេចក្រឡាហោម ស ខេង តាគ្រាម</span>
+                </div>
             </div>
             
             <div class="flex items-center gap-2">
@@ -106,11 +124,6 @@
                 <button id="fullscreenBtn" class="glass-card hover:bg-white/25 transition-all text-white px-4 py-2.5 rounded-full flex items-center gap-2 text-sm font-medium shadow-lg hover:scale-105 active:scale-95">
                     <i class="fa-solid fa-expand text-amber-400" id="fullscreenIcon"></i>
                     <span id="fullscreenText" class="hidden sm:inline">ពេញអេក្រង់</span>
-                </button>
-
-                <button id="openSettingsBtn" class="glass-card hover:bg-white/25 transition-all text-white px-4 py-2.5 rounded-full flex items-center gap-2 text-sm font-semibold shadow-lg hover:scale-105 active:scale-95 border border-amber-400/40">
-                    <i class="fa-solid fa-lock text-amber-300"></i>
-                    <span>ការកំណត់</span>
                 </button>
             </div>
         </header>
@@ -251,8 +264,17 @@
                         <input type="url" id="inputStudentRegUrl" placeholder="https://..." class="w-full bg-slate-800 border border-slate-700 rounded-xl px-4 py-2.5 text-white text-sm">
                     </div>
 
+                    <!-- CUSTOM MENU BUTTONS MANAGEMENT -->
                     <div class="bg-slate-800/40 p-4 rounded-2xl border border-slate-700/50 space-y-3">
-                        <h4 class="text-amber-300 font-bold text-sm"><i class="fa-solid fa-image"></i> ៥. រូបថត Background</h4>
+                        <div class="flex justify-between items-center">
+                            <h4 class="text-amber-300 font-bold text-sm"><i class="fa-solid fa-bars-progress"></i> ៥. បន្ថែមប៊ូតុងថ្មីក្នុង Menu</h4>
+                            <button type="button" id="addCustomMenuBtn" class="bg-amber-400/25 text-amber-300 text-xs px-3 py-1.5 rounded-lg border border-amber-400/30"><i class="fa-solid fa-plus"></i> បន្ថែមប៊ូតុង</button>
+                        </div>
+                        <div id="customButtonEditorList" class="space-y-3 max-h-48 overflow-y-auto pr-1"></div>
+                    </div>
+
+                    <div class="bg-slate-800/40 p-4 rounded-2xl border border-slate-700/50 space-y-3">
+                        <h4 class="text-amber-300 font-bold text-sm"><i class="fa-solid fa-image"></i> ៦. រូបថត Background</h4>
                         <div class="flex gap-2">
                             <input type="url" id="inputBgUrl" placeholder="Link រូបភាព ឬ GIF" class="w-full bg-slate-800 border border-slate-700 rounded-xl px-3 py-2 text-xs text-white">
                             <button type="button" id="addBgUrlBtn" class="bg-amber-400/20 text-amber-300 text-xs px-4 py-2 rounded-xl border border-amber-400/30 font-semibold">បន្ថែម</button>
@@ -267,14 +289,14 @@
 
                     <div class="bg-slate-800/40 p-4 rounded-2xl border border-slate-700/50 space-y-3">
                         <div class="flex justify-between items-center">
-                            <h4 class="text-amber-300 font-bold text-sm"><i class="fa-solid fa-bullhorn"></i> ៦. គ្រប់គ្រងសារជូនដំណឹងដល់សិស្ស</h4>
+                            <h4 class="text-amber-300 font-bold text-sm"><i class="fa-solid fa-bullhorn"></i> ៧. គ្រប់គ្រងសារជូនដំណឹងដល់សិស្ស</h4>
                             <button type="button" id="addAnnouncementBtn" class="bg-amber-400/25 text-amber-300 text-xs px-3 py-1.5 rounded-lg border border-amber-400/30"><i class="fa-solid fa-plus"></i> បន្ថែមសារថ្មី</button>
                         </div>
                         <div id="announcementEditorList" class="space-y-3 max-h-60 overflow-y-auto pr-1"></div>
                     </div>
 
                     <div class="bg-slate-800/40 p-4 rounded-2xl border border-slate-700/50 space-y-3">
-                        <h4 class="text-amber-300 font-bold text-sm"><i class="fa-solid fa-key"></i> ៧. ប្ដូរលេខកូដសម្ងាត់</h4>
+                        <h4 class="text-amber-300 font-bold text-sm"><i class="fa-solid fa-key"></i> ៨. ប្ដូរលេខកូដសម្ងាត់</h4>
                         <input type="password" id="inputNewPassword" placeholder="លេខកូដថ្មី (ទុកទទេបើមិនប្ដូរ)" class="w-full bg-slate-800 border border-slate-700 rounded-xl px-4 py-2.5 text-white text-sm">
                     </div>
                 </div>
@@ -379,6 +401,7 @@
             password: DEFAULT_PASSWORD,
             systemUrl: DEFAULT_SYSTEM_URL,
             studentRegUrl: DEFAULT_STUDENT_REG_URL,
+            customButtons: [],
             announcements: DEFAULT_ANNOUNCEMENTS,
             lastUpdated: Date.now()
         };
@@ -404,9 +427,13 @@
         const toastContainer = document.getElementById('toastContainer');
         const toastMessage = document.getElementById('toastMessage');
 
-        const openSettingsBtn = document.getElementById('openSettingsBtn');
-        const closeSettingsBtn = document.getElementById('closeSettingsBtn');
+        const menuBtn = document.getElementById('menuBtn');
+        const menuDropdown = document.getElementById('menuDropdown');
+        const openSettingsMenuBtn = document.getElementById('openSettingsMenuBtn');
+        const customMenuButtons = document.getElementById('customMenuButtons');
+
         const closePassModalBtn = document.getElementById('closePassModalBtn');
+        const closeSettingsBtn = document.getElementById('closeSettingsBtn');
         
         const settingsForm = document.getElementById('settingsForm');
         const passwordForm = document.getElementById('passwordForm');
@@ -442,6 +469,31 @@
         const announcementGrid = document.getElementById('announcementGrid');
         const announcementEditorList = document.getElementById('announcementEditorList');
         const addAnnouncementBtn = document.getElementById('addAnnouncementBtn');
+        
+        const addCustomMenuBtn = document.getElementById('addCustomMenuBtn');
+        const customButtonEditorList = document.getElementById('customButtonEditorList');
+
+        // Menu Dropdown Toggle Logic
+        menuBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            menuDropdown.classList.toggle('hidden');
+        });
+
+        window.addEventListener('click', () => {
+            menuDropdown.classList.add('hidden');
+        });
+
+        menuDropdown.addEventListener('click', (e) => {
+            e.stopPropagation();
+        });
+
+        openSettingsMenuBtn.addEventListener('click', () => {
+            menuDropdown.classList.add('hidden');
+            inputPassword.value = '';
+            passwordError.classList.add('hidden');
+            passwordModal.classList.remove('hidden');
+            inputPassword.focus();
+        });
 
         // Real-Time Listener with In-App Toast Banner Alert
         onSnapshot(docRef, (docSnap) => {
@@ -454,7 +506,6 @@
                     lastSeenUpdated = data.lastUpdated;
                     localStorage.setItem('last_seen_updated', lastSeenUpdated);
 
-                    // Show In-App Toast Banner on Dashboard for students
                     toastMessage.textContent = config.title;
                     toastContainer.classList.remove('hidden');
                     setTimeout(() => {
@@ -502,10 +553,30 @@
             headerLogo.src = processImageUrl(config.schoolLogo) || DEFAULT_LOGO;
         
             updateManifest();
+            renderCustomMenuButtons();
             currentSlideIndex = 0;
             updateSlideshow();
             startCountdown();
             renderAnnouncements();
+        }
+
+        function renderCustomMenuButtons() {
+            customMenuButtons.innerHTML = '';
+            if (config.customButtons && config.customButtons.length > 0) {
+                // Add a divider before custom buttons
+                const hr = document.createElement('hr');
+                hr.className = 'border-slate-800 my-1';
+                customMenuButtons.appendChild(hr);
+
+                config.customButtons.forEach(btn => {
+                    const a = document.createElement('a');
+                    a.href = btn.url || '#';
+                    a.target = '_blank';
+                    a.className = 'w-full text-left px-4 py-2.5 rounded-xl hover:bg-white/10 text-slate-200 font-medium flex items-center gap-3 transition-all';
+                    a.innerHTML = `<i class="fa-solid fa-link text-amber-400"></i><span>${btn.name || 'ប៊ូតុងគ្មានឈ្មោះ'}</span>`;
+                    customMenuButtons.appendChild(a);
+                });
+            }
         }
 
         function startCountdown() {
@@ -629,13 +700,6 @@
             });
         }
 
-        openSettingsBtn.addEventListener('click', () => {
-            inputPassword.value = '';
-            passwordError.classList.add('hidden');
-            passwordModal.classList.remove('hidden');
-            inputPassword.focus();
-        });
-
         closePassModalBtn.addEventListener('click', () => {
             passwordModal.classList.add('hidden');
         });
@@ -666,6 +730,7 @@
             inputNewPassword.value = '';
 
             renderThumbnails();
+            renderCustomButtonEditors();
             renderAnnouncementEditors();
             settingsModal.classList.remove('hidden');
         }
@@ -723,6 +788,44 @@
                 inputBgUrl.value = '';
                 renderThumbnails();
             }
+        });
+
+        // --- CUSTOM BUTTON EDITORS ---
+        function renderCustomButtonEditors() {
+            customButtonEditorList.innerHTML = '';
+            if (!config.customButtons) config.customButtons = [];
+
+            config.customButtons.forEach((btn, index) => {
+                const box = document.createElement('div');
+                box.className = 'bg-slate-900 border border-slate-700 p-3 rounded-xl space-y-2 relative';
+
+                box.innerHTML = `
+                    <div class="flex justify-between items-center mb-1">
+                        <span class="text-xs font-bold text-amber-400">ប៊ូតុងទី ${toKhmerNum(index + 1)}</span>
+                        <button type="button" class="text-red-400 hover:text-red-300 text-xs delete-custom-btn">
+                            <i class="fa-solid fa-trash"></i> លុប
+                        </button>
+                    </div>
+                    <input type="text" value="${btn.name || ''}" placeholder="ឈ្មោះប៊ូតុង" class="w-full bg-slate-800 border border-slate-700 rounded-lg px-3 py-1.5 text-xs text-white custom-btn-name">
+                    <input type="url" value="${btn.url || ''}" placeholder="Link គោលដៅ (https://...)" class="w-full bg-slate-800 border border-slate-700 rounded-lg px-3 py-1.5 text-xs text-white custom-btn-url">
+                `;
+
+                box.querySelector('.delete-custom-btn').onclick = () => {
+                    config.customButtons.splice(index, 1);
+                    renderCustomButtonEditors();
+                };
+
+                customButtonEditorList.appendChild(box);
+            });
+        }
+
+        addCustomMenuBtn.addEventListener('click', () => {
+            if (!config.customButtons) config.customButtons = [];
+            config.customButtons.push({
+                name: "ប៊ូតុងថ្មី",
+                url: "https://"
+            });
+            renderCustomButtonEditors();
         });
 
         function renderAnnouncementEditors() {
@@ -811,6 +914,19 @@
             config.systemUrl = inputSystemUrl.value;
             config.studentRegUrl = inputStudentRegUrl.value;
 
+            // Collect custom menu buttons from DOM
+            const customNames = customButtonEditorList.querySelectorAll('.custom-btn-name');
+            const customUrls = customButtonEditorList.querySelectorAll('.custom-btn-url');
+            const updatedCustomButtons = [];
+            for (let i = 0; i < customNames.length; i++) {
+                updatedCustomButtons.push({
+                    name: customNames[i].value,
+                    url: customUrls[i].value
+                });
+            }
+            config.customButtons = updatedCustomButtons;
+
+            // Collect announcements from DOM
             const titles = announcementEditorList.querySelectorAll('.ann-title');
             const descs = announcementEditorList.querySelectorAll('.ann-desc');
             const imgs = announcementEditorList.querySelectorAll('.ann-img');
@@ -859,6 +975,7 @@
                     password: DEFAULT_PASSWORD,
                     systemUrl: DEFAULT_SYSTEM_URL,
                     studentRegUrl: DEFAULT_STUDENT_REG_URL,
+                    customButtons: [],
                     announcements: DEFAULT_ANNOUNCEMENTS,
                     lastUpdated: Date.now()
                 };
