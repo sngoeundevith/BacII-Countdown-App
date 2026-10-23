@@ -62,6 +62,20 @@
             background: rgba(245, 158, 11, 0.8);
         }
     </style>
+    <!-- OneSignal Web Push SDK -->
+<script src="https://cdn.onesignal.com/sdks/web/v16/OneSignalSDK.page.js" defer></script>
+<script>
+  window.OneSignalDeferred = window.OneSignalDeferred || [];
+  OneSignalDeferred.push(async function(OneSignal) {
+    await OneSignal.init({
+      appId: "320756c9-b165-4a2b-9bf8-b44f01bcfdaf",
+      safari_web_id: "",
+      notifyButton: {
+        enable: true,
+      },
+    });
+  });
+</script>
 </head>
 <body class="bg-slate-950 text-white min-h-screen overflow-x-hidden select-none">
 
