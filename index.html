@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>កម្មវិធី Countdown កាលបរិច្ឆេទ</title>
+    <title>Takream</title>
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- Google Fonts for Khmer (Moul & Kantumruuy Pro) & Inter -->
@@ -21,7 +21,7 @@
             font-family: 'Moul', 'Khmer OS Muol Light', serif;
         }
         .num-font {
-            font-family: 'Kantumruuy Pro', 'Inter', sans-serif;
+            font-family: 'Khmer OS Muol Light', 'Inter', sans-serif;
         }
         .glass-panel {
             background: rgba(15, 23, 42, 0.65);
@@ -94,7 +94,7 @@
         <header class="flex flex-wrap justify-between items-center gap-3 w-full">
             <div class="flex items-center space-x-3 bg-slate-900/80 backdrop-blur-md px-4 py-2.5 rounded-full border border-amber-500/30 shadow-lg">
                 <img id="headerLogo" src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/svgs/solid/hourglass-half.svg" alt="Logo" class="w-6 h-6 object-contain rounded-full bg-amber-400/20 p-0.5">
-                <span class="font-bold text-sm md:text-base tracking-wide text-amber-300">BacII Countdown App</span>
+                <span class="font-bold text-sm md:text-base tracking-wide text-amber-300">វិទ្យាល័យសម្ដេចក្រឡាហោម ស ខេង តាគ្រាម</span>
             </div>
             
             <div class="flex items-center gap-2">
@@ -121,8 +121,8 @@
                 <h1 id="displayTitle" style="white-space: nowrap;" class="khmer-moul text-xl sm:text-3xl md:text-5xl lg:text-6xl font-normal text-amber-300 tracking-wide text-glow text-center">
                     ថ្ងៃប្រឡងបាក់ឌុប ១០ សីហា ២០២៧
                 </h1>
-                <p id="targetDateSubtitle" class="text-slate-100 text-sm md:text-xl mt-3 font-semibold tracking-wider text-glow bg-slate-950/40 px-4 py-1.5 rounded-full inline-block border border-white/10">
-                    កាលបរិច្ឆេទកំណត់៖ ...
+                <p class="text-slate-100 text-sm md:text-xl mt-3 font-semibold tracking-wider text-glow bg-slate-950/40 px-4 py-1.5 rounded-full inline-block border border-white/10">
+                    ចំនួនថ្ងៃនៅសល់
                 </p>
             </div>
 
@@ -164,7 +164,7 @@
         <section id="announcementsSection" class="w-full my-8">
             <div class="flex items-center gap-3 mb-6">
                 <div class="h-8 w-2 bg-amber-400 rounded-full"></div>
-                <h3 class="text-xl md:text-2xl font-bold text-white text-glow flex items-center gap-2">
+                <h3 style="font-family: 'Khmer OS Muol Light', sans-serif;" class="text-xl md:text-2xl font-bold text-white text-glow flex items-center gap-2">
                     <i class="fa-solid fa-bullhorn text-amber-400"></i> សារជូនដំណឹង និងព័ត៌មានផ្សេងៗសម្រាប់សិស្ស
                 </h3>
             </div>
@@ -174,6 +174,7 @@
         <!-- Footer -->
         <footer class="text-center text-xs md:text-sm text-slate-300 font-light text-glow border-t border-white/10 pt-4">
             <p>ការសិក្សាមានរសជាតិល្វីងជូរចត់ តែផ្លែផ្កាមានរសជាតិផ្អែម</p>
+            <p>©️លោកគ្រូ ស្ងឿន ដេវីត (ឆ្នាំ២០២៦)</p>
         </footer>
     </div>
 
@@ -201,7 +202,7 @@
     <div id="settingsModal" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/85 backdrop-blur-md hidden">
         <div class="bg-slate-900 border border-slate-700/80 rounded-3xl p-6 md:p-8 max-w-2xl w-full shadow-2xl text-slate-100 max-h-[90vh] overflow-y-auto">
             <div class="flex justify-between items-center mb-6 border-b border-slate-800 pb-4">
-                <h3 class="text-xl font-bold flex items-center gap-2 text-amber-400"><i class="fa-solid fa-sliders"></i> ការកំណត់ប្រព័ន្ធ (Real-Time Sync)</h3>
+                <h3 class="text-xl font-bold flex items-center gap-2 text-amber-400"><i class="fa-solid fa-sliders"></i> ការកំណត់ប្រព័ន្ធ</h3>
                 <button id="closeSettingsBtn" class="text-slate-400 hover:text-white text-xl"><i class="fa-solid fa-xmark"></i></button>
             </div>
             <form id="settingsForm" class="space-y-6">
@@ -218,7 +219,7 @@
                 </div>
 
                 <div class="bg-slate-800/40 p-4 rounded-2xl border border-slate-700/50 space-y-3">
-                    <h4 class="text-amber-300 font-bold text-sm"><i class="fa-solid fa-school"></i> ២. Logo សាលា (សម្រាប់ App Icon និង Header)</h4>
+                    <h4 class="text-amber-300 font-bold text-sm"><i class="fa-solid fa-school"></i> ២. Logo សាលា</h4>
                     <input type="url" id="inputSchoolLogo" placeholder="Link Logo សាលា (URL)" class="w-full bg-slate-800 border border-slate-700 rounded-xl px-3 py-2 text-xs text-white">
                     <div class="border-2 border-dashed border-slate-700 hover:border-amber-400/50 rounded-2xl p-3 text-center cursor-pointer bg-slate-800/50" onclick="document.getElementById('schoolLogoFileInput').click()">
                         <i class="fa-solid fa-cloud-arrow-up text-xl text-amber-400 mb-1"></i>
@@ -233,7 +234,7 @@
                 </div>
 
                 <div class="bg-slate-800/40 p-4 rounded-2xl border border-slate-700/50 space-y-3">
-                    <h4 class="text-amber-300 font-bold text-sm"><i class="fa-solid fa-image"></i> ៤. រូបថត Background (GIF / Image)</h4>
+                    <h4 class="text-amber-300 font-bold text-sm"><i class="fa-solid fa-image"></i> ៤. រូបថត Background</h4>
                     <div class="flex gap-2">
                         <input type="url" id="inputBgUrl" placeholder="Link រូបភាព ឬ GIF" class="w-full bg-slate-800 border border-slate-700 rounded-xl px-3 py-2 text-xs text-white">
                         <button type="button" id="addBgUrlBtn" class="bg-amber-400/20 text-amber-300 text-xs px-4 py-2 rounded-xl border border-amber-400/30 font-semibold">បន្ថែម</button>
@@ -261,7 +262,7 @@
 
                 <div class="flex gap-3 pt-2">
                     <button type="button" id="resetBtn" class="w-1/3 bg-slate-800 hover:bg-slate-700 text-slate-300 py-3 rounded-xl text-sm">កំណត់ដើម</button>
-                    <button type="submit" id="saveSettingsBtn" class="w-2/3 bg-amber-400 hover:bg-amber-500 text-slate-950 font-bold py-3 rounded-xl shadow-lg text-sm">រក្សាទុក (Sync Real-Time)</button>
+                    <button type="submit" id="saveSettingsBtn" class="w-2/3 bg-amber-400 hover:bg-amber-500 text-slate-950 font-bold py-3 rounded-xl shadow-lg text-sm">រក្សាទុក</button>
                 </div>
             </form>
         </div>
@@ -329,23 +330,8 @@
         });
 
         const KHMER_DIGITS = ['០', '១', '២', '៣', '៤', '៥', '៦', '៧', '៨', '៩'];
-        const KHMER_DAYS = ['អាទិត្យ', 'ចន្ទ', 'អង្គារ', 'ពុធ', 'ព្រហស្បតិ៍', 'សុក្រ', 'សៅរ៍'];
-        const KHMER_MONTHS = ['មករា', 'កុម្ភៈ', 'មីនា', 'មេសា', 'ឧសភា', 'មិថុនា', 'កក្កដា', 'សីហា', 'កញ្ញា', 'តុលា', 'វិច្ឆិកា', 'ធ្នូ'];
-
         function toKhmerNum(num) {
             return String(num).replace(/\d/g, (digit) => KHMER_DIGITS[parseInt(digit)]);
-        }
-
-        function formatKhmerDate(dateObj) {
-            const dayName = KHMER_DAYS[dateObj.getDay()];
-            const dayNum = toKhmerNum(dateObj.getDate());
-            const monthName = KHMER_MONTHS[dateObj.getMonth()];
-            const yearNum = toKhmerNum(dateObj.getFullYear());
-            let hours = dateObj.getHours();
-            const minutes = dateObj.getMinutes();
-            const ampm = hours >= 12 ? 'ល្ងាច' : 'ព្រឹក';
-            hours = hours % 12 || 12;
-            return `ថ្ងៃ${dayName} ទី${dayNum} ខែ${monthName} ឆ្នាំ${yearNum} ម៉ោង ${toKhmerNum(String(hours).padStart(2, '0'))}:${toKhmerNum(String(minutes).padStart(2, '0'))} ${ampm}`;
         }
 
         const DEFAULT_TITLE = "ថ្ងៃប្រឡងបាក់ឌុប ១០ សីហា ២០២៧";
