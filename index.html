@@ -128,19 +128,19 @@
 
             <div class="flex flex-wrap justify-center items-stretch gap-4 md:gap-6 max-w-full w-full px-4">
                 <div class="glass-card rounded-2xl md:rounded-3xl p-4 sm:p-6 flex flex-col items-center justify-center border border-white/10 shadow-2xl w-auto min-w-[130px] sm:min-w-[160px] px-6">
-                    <span id="days" class="khmer-moul class="text-5xl sm:text-7xl lg:text-8xl font-black text-amber-400 tracking-wider">០</span>
+                    <span id="days" class="khmer-moul class="text-6xl sm:text-8xl lg:text-9xl font-black text-amber-400 tracking-wider">០</span>
                     <span class="text-slate-300 text-sm md:text-lg mt-2 font-medium">ថ្ងៃ</span>
                 </div>
                 <div class="glass-card rounded-2xl md:rounded-3xl p-4 sm:p-6 flex flex-col items-center justify-center border border-white/10 shadow-2xl w-auto min-w-[130px] sm:min-w-[160px] px-6">
-                    <span id="hours" class="khmer-moul class="text-5xl sm:text-7xl lg:text-8xl font-black text-amber-400 tracking-wider">០</span>
+                    <span id="hours" class="khmer-moul class="text-6xl sm:text-8xl lg:text-9xl font-black text-amber-400 tracking-wider">០</span>
                     <span class="text-slate-300 text-sm md:text-lg mt-2 font-medium">ម៉ោង</span>
                 </div>
                 <div class="glass-card rounded-2xl md:rounded-3xl p-4 sm:p-6 flex flex-col items-center justify-center border border-white/10 shadow-2xl w-auto min-w-[130px] sm:min-w-[160px] px-6">
-                    <span id="minutes" class="khmer-moul class="text-5xl sm:text-7xl lg:text-8xl font-black text-amber-400 tracking-wider">០</span>
+                    <span id="minutes" class="khmer-moul class="text-6xl sm:text-8xl lg:text-9xl font-black text-amber-400 tracking-wider">០</span>
                     <span class="text-slate-300 text-sm md:text-lg mt-2 font-medium">នាទី</span>
                 </div>
                 <div class="glass-card rounded-2xl md:rounded-3xl p-4 sm:p-6 flex flex-col items-center justify-center border border-white/10 shadow-2xl w-auto min-w-[130px] sm:min-w-[160px] px-6">
-                    <span id="seconds" class="khmer-moul class="text-5xl sm:text-7xl lg:text-8xl font-black text-amber-400 tracking-wider">០</span>
+                    <span id="seconds" class="khmer-moul class="text-6xl sm:text-8xl lg:text-9xl font-black text-amber-400 tracking-wider">០</span>
                     <span class="text-slate-300 text-sm md:text-lg mt-2 font-medium">វិនាទី</span>
                 </div>
             </div>
@@ -199,8 +199,8 @@
         </div>
     </div>
 
-    <div id="settingsModal" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/85 backdrop-blur-md hidden">
-        <div class="bg-slate-900 border border-slate-700/80 rounded-3xl p-6 md:p-8 max-w-2xl w-full shadow-2xl text-slate-100 max-h-[90vh] overflow-y-auto">
+    <div id="settingsModal" class="fixed inset-0 z-50 flex items-center justify-center p-2 md:p-6 bg-slate-950/90 backdrop-blur-md hidden">
+        <div class="bg-slate-900 border border-slate-700/80 rounded-3xl p-4 md:p-8 w-full max-w-4xl h-[95vh] md:h-[90vh] shadow-2xl text-slate-100 flex flex-col overflow-hidden">
             <div class="flex justify-between items-center mb-6 border-b border-slate-800 pb-4">
                 <h3 class="text-xl font-bold flex items-center gap-2 text-amber-400"><i class="fa-solid fa-sliders"></i> ការកំណត់ប្រព័ន្ធ</h3>
                 <button id="closeSettingsBtn" class="text-slate-400 hover:text-white text-xl"><i class="fa-solid fa-xmark"></i></button>
@@ -755,7 +755,7 @@
 
         addAnnouncementBtn.addEventListener('click', () => {
             if (!config.announcements) config.announcements = [];
-            config.announcements.push({
+            config.announcements.unshift({
                 id: Date.now(),
                 title: "សារជូនដំណឹងថ្មី",
                 desc: "",
