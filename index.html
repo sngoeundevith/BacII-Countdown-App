@@ -15,7 +15,7 @@
 
     <style>
         body {
-            font-family: 'Khmer OS Battambang', sans-serif;
+            font-family: 'Khmer OS', sans-serif;
         }
         .khmer-moul {
             font-family: 'Moul', 'Khmer OS Muol Light', serif;
@@ -274,8 +274,8 @@
 
                     <!-- BACKGROUND MUSIC SETTING -->
                     <div class="bg-slate-800/40 p-4 rounded-2xl border border-slate-700/50 space-y-3">
-                        <h4 class="text-amber-300 font-bold text-sm"><i class="fa-solid fa-music"></i> ៥. បទចម្រៀងផ្ទៃខាងក្រោយ (Link ឬ Upload)</h4>
-                        <input type="url" id="inputMusicUrl" placeholder="Paste Link ទីនេះ (ឧ. Google Drive)..." class="w-full bg-slate-800 border border-slate-700 rounded-xl px-4 py-2 text-xs text-white">
+                        <h4 class="text-amber-300 font-bold text-sm"><i class="fa-solid fa-music"></i> ៥. បទចម្រៀងផ្ទៃខាងក្រោយ (Link Google Drive ឬ Upload)</h4>
+                        <input type="url" id="inputMusicUrl" placeholder="Paste Link Google Drive ទីនេះ..." class="w-full bg-slate-800 border border-slate-700 rounded-xl px-4 py-2 text-xs text-white">
                         <div class="border-2 border-dashed border-slate-700 hover:border-amber-400/50 rounded-2xl p-3 text-center cursor-pointer bg-slate-800/50" onclick="document.getElementById('musicFileInput').click()">
                             <i class="fa-solid fa-cloud-arrow-up text-xl text-amber-400 mb-1"></i>
                             <p class="text-xs text-slate-300">ឬ Upload ឯកសារ MP3 / MP4 ពីទូរស័ព្ទ/កុំព្យូទ័រ</p>
@@ -360,13 +360,14 @@
             return url;
         }
 
+        // Updated to use Google direct content stream URL to bypass virus warning / CORS issues
         function processAudioUrl(url) {
             if (!url) return '';
             if (url.startsWith('data:')) return url;
             if (url.includes('drive.google.com')) {
                 const match = url.match(/\/d\/([a-zA-Z0-9_-]+)/);
                 if (match && match[1]) {
-                    return `https://drive.google.com/uc?export=download&id=${match[1]}`;
+                    return `https://lh3.googleusercontent.com/d/${match[1]}`;
                 }
             }
             return url;
@@ -503,7 +504,7 @@
 
         musicToggleBtn.addEventListener('click', () => {
             if (!bgAudio.src) {
-                alert("សូមដាក់ Link ឬ Upload ឯកសារ MP3 / MP4 ក្នុងផ្ទាំងការកំណត់ជាមុនសិន!");
+                alert("សូមដាក់ Link Google Drive ឬ Upload ឯកសារ MP3 / MP4 ក្នុងផ្ទាំងការកំណត់ជាមុនសិន!");
                 return;
             }
             if (isMusicPlaying) {
@@ -517,7 +518,7 @@
                     musicIcon.className = "fa-solid fa-volume-high text-amber-400 animate-pulse";
                     musicToggleBtn.title = "បិទចម្រៀង";
                 }).catch(err => {
-                    alert("មិនអាចចាក់សំឡេងបានទេ សូមពិនិត្យមើល Link ឬ Upload ឯកសារផ្ទាល់!");
+                    alert("សូមពិនិត្យមើលសិទ្ធិ Link Google Drive ថាបានកំណត់ជា 'Anyone with the link' ហើយឬยัง!");
                 });
             }
         });
@@ -1075,10 +1076,12 @@
             if (!document.fullscreenElement) {
                 document.documentElement.requestFullscreen().catch(err => console.log(err));
                 fullscreenIcon.className = "fa-solid fa-compress text-amber-400";
+                fullscreenBtn.title = "បង្រួមអេក្រង់";
             } else {
                 if (document.exitFullscreen) {
                     document.exitFullscreen();
                     fullscreenIcon.className = "fa-solid fa-expand text-amber-400";
+                    fullscreenBtn.title = "ពេញអេក្រង់";
                 }
             }
         });
