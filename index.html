@@ -96,10 +96,10 @@
         <!-- Top Navigation Header -->
         <header class="flex flex-wrap justify-between items-center gap-3 w-full relative">
             <div class="flex items-center space-x-3">
-                <!-- Menu Button (Hamburger) -->
+                <!-- Menu Button (No Highlight) -->
                 <div class="relative">
-                    <button id="menuBtn" title="Menu" class="glass-card hover:bg-white/25 transition-all text-white p-3 rounded-full flex items-center justify-center text-base shadow-lg hover:scale-105 active:scale-95 border border-amber-400/40">
-                        <i class="fa-solid fa-bars text-amber-300"></i>
+                    <button id="menuBtn" title="Menu" class="hover:bg-white/10 transition-all text-white p-2.5 rounded-full flex items-center justify-center text-base hover:scale-105 active:scale-95">
+                        <i class="fa-solid fa-bars text-amber-300 text-lg"></i>
                     </button>
 
                     <!-- Menu Dropdown -->
@@ -113,25 +113,25 @@
                 </div>
 
                 <div class="flex items-center space-x-3 px-2 py-1">
-                    <img id="headerLogo" src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/svgs/solid/hourglass-half.svg" alt="Logo" class="w-9 h-9 md:w-10 md:h-10 object-contain rounded-full bg-amber-400/20 p-1">
+                    <img id="headerLogo" src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/svgs/solid/hourglass-half.svg" alt="Logo" class="w-9 h-9 md:w-10 md:h-10 object-contain">
                     <span class="khmer-moul text-base sm:text-lg md:text-xl text-amber-300 tracking-wide drop-shadow-lg">វិទ្យាល័យសម្ដេចក្រឡាហោម ស ខេង តាគ្រាម</span>
                 </div>
             </div>
             
-            <div class="flex items-center gap-2">
-                <!-- Music Toggle Button (Icon Only) -->
-                <button id="musicToggleBtn" title="ចម្រៀង" class="glass-card hover:bg-white/25 transition-all text-white p-3 rounded-full flex items-center justify-center text-base shadow-lg hover:scale-105 active:scale-95 border border-amber-400/40">
-                    <i class="fa-solid fa-music text-amber-400" id="musicIcon"></i>
+            <div class="flex items-center gap-1">
+                <!-- Music Toggle Button (No Highlight) -->
+                <button id="musicToggleBtn" title="ចម្រៀង" class="hover:bg-white/10 transition-all text-white p-2.5 rounded-full flex items-center justify-center text-base hover:scale-105 active:scale-95">
+                    <i class="fa-solid fa-music text-amber-400 text-lg" id="musicIcon"></i>
                 </button>
 
-                <!-- Install App Button (Icon Only) -->
-                <button id="installAppBtn" title="ដំឡើង App" class="bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-400 hover:to-amber-500 text-slate-950 font-bold p-3 rounded-full flex items-center justify-center text-base shadow-lg hover:scale-105 active:scale-95 transition-all hidden">
+                <!-- Install App Button -->
+                <button id="installAppBtn" title="ដំឡើង App" class="bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-400 hover:to-amber-500 text-slate-950 font-bold p-2.5 rounded-full flex items-center justify-center text-base shadow-lg hover:scale-105 active:scale-95 transition-all hidden">
                     <i class="fa-solid fa-download"></i>
                 </button>
 
-                <!-- Fullscreen Button (Icon Only) -->
-                <button id="fullscreenBtn" title="ពេញអេក្រង់" class="glass-card hover:bg-white/25 transition-all text-white p-3 rounded-full flex items-center justify-center text-base shadow-lg hover:scale-105 active:scale-95 border border-amber-400/40">
-                    <i class="fa-solid fa-expand text-amber-400" id="fullscreenIcon"></i>
+                <!-- Fullscreen Button (No Highlight) -->
+                <button id="fullscreenBtn" title="ពេញអេក្រង់" class="hover:bg-white/10 transition-all text-white p-2.5 rounded-full flex items-center justify-center text-base hover:scale-105 active:scale-95">
+                    <i class="fa-solid fa-expand text-amber-400 text-lg" id="fullscreenIcon"></i>
                 </button>
             </div>
         </header>
@@ -274,8 +274,8 @@
 
                     <!-- BACKGROUND MUSIC SETTING -->
                     <div class="bg-slate-800/40 p-4 rounded-2xl border border-slate-700/50 space-y-3">
-                        <h4 class="text-amber-300 font-bold text-sm"><i class="fa-solid fa-music"></i> ៥. បទចម្រៀងផ្ទៃខាងក្រោយ (MP3 ឬ MP4)</h4>
-                        <input type="url" id="inputMusicUrl" placeholder="Paste Link Google Drive ទីនេះ..." class="w-full bg-slate-800 border border-slate-700 rounded-xl px-4 py-2 text-xs text-white">
+                        <h4 class="text-amber-300 font-bold text-sm"><i class="fa-solid fa-music"></i> ៥. បទចម្រៀងផ្ទៃខាងក្រោយ (Link ឬ Upload)</h4>
+                        <input type="url" id="inputMusicUrl" placeholder="Paste Link ទីនេះ (ឧ. Google Drive)..." class="w-full bg-slate-800 border border-slate-700 rounded-xl px-4 py-2 text-xs text-white">
                         <div class="border-2 border-dashed border-slate-700 hover:border-amber-400/50 rounded-2xl p-3 text-center cursor-pointer bg-slate-800/50" onclick="document.getElementById('musicFileInput').click()">
                             <i class="fa-solid fa-cloud-arrow-up text-xl text-amber-400 mb-1"></i>
                             <p class="text-xs text-slate-300">ឬ Upload ឯកសារ MP3 / MP4 ពីទូរស័ព្ទ/កុំព្យូទ័រ</p>
@@ -517,7 +517,7 @@
                     musicIcon.className = "fa-solid fa-volume-high text-amber-400 animate-pulse";
                     musicToggleBtn.title = "បិទចម្រៀង";
                 }).catch(err => {
-                    alert("សូមដាក់ Link ឬ Upload ឯកសារ MP3 / MP4 ឱ្យបានត្រឹមត្រូវ!");
+                    alert("មិនអាចចាក់សំឡេងបានទេ សូមពិនិត្យមើល Link ឬ Upload ឯកសារផ្ទាល់!");
                 });
             }
         });
