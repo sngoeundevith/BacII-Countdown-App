@@ -272,13 +272,13 @@
                         <input type="url" id="inputStudentRegUrl" placeholder="https://..." class="w-full bg-slate-800 border border-slate-700 rounded-xl px-4 py-2.5 text-white text-sm">
                     </div>
 
-                    <!-- BACKGROUND MUSIC SETTING -->
+                    <!-- BACKGROUND MUSIC SETTING (UPLOAD ONLY & SIZE WARNING) -->
                     <div class="bg-slate-800/40 p-4 rounded-2xl border border-slate-700/50 space-y-3">
-                        <h4 class="text-amber-300 font-bold text-sm"><i class="fa-solid fa-music"></i> ៥. បទចម្រៀងផ្ទៃខាងក្រោយ (Link Google Drive ឬ Upload)</h4>
-                        <input type="url" id="inputMusicUrl" placeholder="Paste Link Google Drive ទីនេះ..." class="w-full bg-slate-800 border border-slate-700 rounded-xl px-4 py-2 text-xs text-white">
+                        <h4 class="text-amber-300 font-bold text-sm"><i class="fa-solid fa-music"></i> ៥. បទចម្រៀងផ្ទៃខាងក្រោយ (Upload ឯកសារ MP3 / MP4)</h4>
                         <div class="border-2 border-dashed border-slate-700 hover:border-amber-400/50 rounded-2xl p-3 text-center cursor-pointer bg-slate-800/50" onclick="document.getElementById('musicFileInput').click()">
                             <i class="fa-solid fa-cloud-arrow-up text-xl text-amber-400 mb-1"></i>
-                            <p class="text-xs text-slate-300">ឬ Upload ឯកសារ MP3 / MP4 ពីទូរស័ព្ទ/កុំព្យូទ័រ</p>
+                            <p class="text-xs text-slate-300">Upload ឯកសារ MP3 / MP4 ពីទូរស័ព្ទ/កុំព្យូទ័រ</p>
+                            <p class="text-[11px] text-amber-400 font-bold mt-1">⚠️ (ទំហំឯកសារត្រូវតូចជាង 1MB)</p>
                         </div>
                         <input type="file" id="musicFileInput" accept="audio/*,video/mp4" class="hidden">
                         <div id="musicFileInfo" class="text-[11px] text-amber-400 truncate"></div>
@@ -360,16 +360,8 @@
             return url;
         }
 
-        // Updated to use Google direct content stream URL to bypass virus warning / CORS issues
         function processAudioUrl(url) {
             if (!url) return '';
-            if (url.startsWith('data:')) return url;
-            if (url.includes('drive.google.com')) {
-                const match = url.match(/\/d\/([a-zA-Z0-9_-]+)/);
-                if (match && match[1]) {
-                    return `https://lh3.googleusercontent.com/d/${match[1]}`;
-                }
-            }
             return url;
         }
 
@@ -482,7 +474,6 @@
         const schoolLogoFileInput = document.getElementById('schoolLogoFileInput');
         const inputSystemUrl = document.getElementById('inputSystemUrl');
         const inputStudentRegUrl = document.getElementById('inputStudentRegUrl');
-        const inputMusicUrl = document.getElementById('inputMusicUrl');
         const musicFileInput = document.getElementById('musicFileInput');
         const musicFileInfo = document.getElementById('musicFileInfo');
         const inputNewPassword = document.getElementById('inputNewPassword');
@@ -504,7 +495,7 @@
 
         musicToggleBtn.addEventListener('click', () => {
             if (!bgAudio.src) {
-                alert("សូមដាក់ Link Google Drive ឬ Upload ឯកសារ MP3 / MP4 ក្នុងផ្ទាំងការកំណត់ជាមុនសិន!");
+                alert("សូម Upload ឯកសារ MP3 / MP4 ក្នុងផ្ទាំងការកំណត់ជាមុនសិន!");
                 return;
             }
             if (isMusicPlaying) {
@@ -518,7 +509,7 @@
                     musicIcon.className = "fa-solid fa-volume-high text-amber-400 animate-pulse";
                     musicToggleBtn.title = "បិទចម្រៀង";
                 }).catch(err => {
-                    alert("មិនអាចចាក់សំឡេងបានទេ! សូមពិនិត្យមើល Link ឡើងវិញ ឬសាកល្បង Upload ឯកសារ MP3 ផ្ទាល់។");
+                    alert("មិនអាចចាក់សំឡេងបានទេ! សូមពិនិត្យមើលឯកសារ MP3 ឡើងវិញ។");
                 });
             }
         });
@@ -794,7 +785,6 @@
             inputSchoolLogo.value = (config.schoolLogo && !config.schoolLogo.startsWith('data:')) ? config.schoolLogo : '';
             inputSystemUrl.value = config.systemUrl || '';
             inputStudentRegUrl.value = config.studentRegUrl || '';
-            inputMusicUrl.value = (config.musicUrl && !config.musicUrl.startsWith('data:')) ? config.musicUrl : '';
             musicFileInfo.textContent = config.musicUrl && config.musicUrl.startsWith('data:') ? "✓ បាន Upload ဖိုင် MP3/MP4 រួចរាល់ក្នុងប្រព័ន្ធ" : "";
             inputNewPassword.value = '';
 
@@ -847,13 +837,18 @@
             }
         });
 
+        // Music File Upload with size check (< 1MB)
         musicFileInput.addEventListener('change', (e) => {
             const file = e.target.files[0];
             if (file) {
+                if (file.size > 1024 * 1024) {
+                    alert("ឯកសារមានទំហំធំជាង 1MB! សូមជ្រើសរើសឯកសារដែលមានទំហំតូចជាង 1MB។");
+                    musicFileInput.value = '';
+                    return;
+                }
                 const reader = new FileReader();
                 reader.onload = (event) => {
                     config.musicUrl = event.target.result;
-                    inputMusicUrl.value = '';
                     musicFileInfo.textContent = `✓ Upload រួចរាល់: ${file.name}`;
                 };
                 reader.readAsDataURL(file);
@@ -995,10 +990,6 @@
             config.systemUrl = inputSystemUrl.value;
             config.studentRegUrl = inputStudentRegUrl.value;
 
-            if (inputMusicUrl.value.trim() !== '') {
-                config.musicUrl = inputMusicUrl.value.trim();
-            }
-
             const customNames = customButtonEditorList.querySelectorAll('.custom-btn-name');
             const customUrls = customButtonEditorList.querySelectorAll('.custom-btn-url');
             const updatedCustomButtons = [];
@@ -1044,7 +1035,7 @@
                 alert("រក្សាទុក និងធ្វើបច្ចុប្បន្នភាព Real-Time ដោយជោគជ័យ!");
                 settingsModal.classList.add('hidden');
             } catch (err) {
-                alert("មានបញ្ហាក្នុងការរក្សាទុក៖ " + err.message);
+                alert("មានបញ្ហាក្នុងการរក្សាទុក៖ " + err.message);
             }
         });
 
