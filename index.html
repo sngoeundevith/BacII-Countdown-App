@@ -1075,12 +1075,10 @@
             if (!document.fullscreenElement) {
                 document.documentElement.requestFullscreen().catch(err => console.log(err));
                 fullscreenIcon.className = "fa-solid fa-compress text-amber-400";
-                fullscreenBtn.title = "បង្រួមអេក្រង់";
             } else {
                 if (document.exitFullscreen) {
                     document.exitFullscreen();
                     fullscreenIcon.className = "fa-solid fa-expand text-amber-400";
-                    fullscreenBtn.title = "ពេញអេក្រង់";
                 }
             }
         });
