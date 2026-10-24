@@ -192,7 +192,7 @@
             <div class="flex items-center gap-3 mb-6">
                 <div class="h-8 w-2 bg-amber-400 rounded-full"></div>
                 <h3 class="khmer-moul text-xl md:text-2xl font-normal text-white text-glow flex items-center gap-2">
-                    <i class="fa-solid fa-bullhorn text-amber-400"></i> សារជូនដំណឹង
+                    <i class="fa-solid fa-bullhorn text-amber-300"></i> សារជូនដំណឹង
                 </h3>
             </div>
             <div id="announcementGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"></div>
@@ -787,7 +787,7 @@
             inputSchoolLogo.value = (config.schoolLogo && !config.schoolLogo.startsWith('data:')) ? config.schoolLogo : '';
             inputSystemUrl.value = config.systemUrl || '';
             inputStudentRegUrl.value = config.studentRegUrl || '';
-            musicFileInfo.textContent = config.musicUrl && config.musicUrl.startsWith('data:') ? "✓ បាន Upload ဖိုင် MP3/MP4 រួចរាល់ក្នុងប្រព័ន្ធ" : "";
+            musicFileInfo.textContent = config.musicUrl && config.musicUrl.startsWith('data:') ? "✓ បាន Upload MP3/MP4 រួចរាល់ក្នុងប្រព័ន្ធ" : "";
             inputNewPassword.value = '';
 
             renderThumbnails();
@@ -844,7 +844,7 @@
             const file = e.target.files[0];
             if (file) {
                 if (file.size > 1024 * 1024) {
-                    alert("ឯកសារមានទំហំធំជាង 1MB! សូមជ្រើសរើសឯកសារដែលមានទំហំតូចជាង 1MB។");
+                    alert("ឯកសារមានទំហំធំជាង 1MB! សូមជ្រើសរើសឯកសារដែលមានទំហំតូចជាង 1MB");
                     musicFileInput.value = '';
                     return;
                 }
