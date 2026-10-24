@@ -8,19 +8,20 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- Google Fonts for Khmer (Moul & Kantumruuy Pro) & Inter -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link href="https://fonts.googleapis.com/css2?family=Battambang:wght@400;700&family=Muol&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Moul&family=Kantumruuy+Pro:ital,wght@0,300..700;1,300..700&family=Inter:wght@400;600;800;900&display=swap" rel="stylesheet">
     <!-- FontAwesome Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
     <style>
         body {
-            font-family: 'Battambang', sans-serif;
+            font-family: 'Khmer OS Battambang', sans-serif;
         }
         .khmer-moul {
             font-family: 'Moul', 'Khmer OS Muol Light', serif;
         }
         .num-font {
-            font-family: 'Muol', sans-serif;
+            font-family: 'Moul', 'Khmer OS Muol Light', 'Inter', sans-serif;
         }
         .glass-panel {
             background: rgba(15, 23, 42, 0.65);
@@ -113,9 +114,7 @@
 
                 <div class="flex items-center space-x-3 px-2 py-1">
                     <img id="headerLogo" src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/svgs/solid/hourglass-half.svg" alt="Logo" class="w-9 h-9 md:w-10 md:h-10 object-contain">
-                    <span class="khmer-moul text-base sm:text-lg md:text-xl text-amber-300 tracking-wide drop-shadow-lg inline-block py-3 px-1" style="line-height: 2.2;">
-                        វិទ្យាល័យសម្ដេចក្រឡាហោម ស ខេង តាគ្រាម
-                    </span>
+                    <span class="khmer-moul text-base sm:text-lg md:text-xl text-amber-300 tracking-wide drop-shadow-lg">វិទ្យាល័យសម្ដេចក្រឡាហោម ស ខេង តាគ្រាម</span>
                 </div>
             </div>
             
@@ -139,8 +138,8 @@
 
         <!-- CENTER DISPLAY AREA: Countdown Number -->
         <main class="flex-1 flex flex-col items-center justify-center text-center my-8">
-            <div class="mb-6 max-w-4xl w-full px-4 py-6 flex flex-col items-center justify-center text-center">
-                <h1 id="displayTitle" class="khmer-moul text-xl sm:text-2xl md:text-3xl lg:text-4xl font-normal text-amber-300 tracking-wide text-glow text-center py-4" style="line-height: 2.3;">
+            <div class="mb-6 max-w-full w-full px-4 flex flex-col items-center justify-center text-center">
+                <h1 id="displayTitle" style="white-space: nowrap;" class="khmer-moul text-xl sm:text-3xl md:text-5xl lg:text-6xl font-normal text-amber-300 tracking-wide text-glow text-center">
                     ថ្ងៃប្រឡងបាក់ឌុប ១០ សីហា ២០២៧
                 </h1>
                 <p id="targetDateSubtitle" class="text-slate-100 text-sm md:text-xl mt-3 font-semibold tracking-wider text-glow">
@@ -174,13 +173,13 @@
             </div>
 
             <!-- TWO NAVIGATION BUTTONS -->
-            <div class="khmer-moul mt-8 flex flex-col items-center gap-4 w-full max-w-xl mx-auto px-4">
-                <a id="systemLinkBtn" href="#" target="_blank" class="w-full inline-flex items-center justify-center gap-3 bg-gradient-to-r from-amber-500 via-amber-400 to-amber-500 hover:from-amber-400 text-slate-950 font-black text-base sm:text-lg md:text-xl px-8 py-4 rounded-full shadow-2xl transform hover:scale-105 transition-all border-2 border-white/40 ring-4 ring-amber-400/20">
+            <div class="mt-8 flex flex-col items-center gap-4 w-full max-w-xl mx-auto px-4">
+                <a id="systemLinkBtn" href="#" target="_blank" class="khmer-moul w-full inline-flex items-center justify-center gap-3 bg-gradient-to-r from-amber-500 via-amber-400 to-amber-500 hover:from-amber-400 text-slate-950 font-black text-base sm:text-lg md:text-xl px-8 py-4 rounded-full shadow-2xl transform hover:scale-105 transition-all border-2 border-white/40 ring-4 ring-amber-400/20">
                     <i class="fa-solid fa-graduation-cap text-2.8xl"></i>
                     <span>ប្រព័ន្ធគ្រប់គ្រងពិន្ទុសិស្ស</span>
                     <i class="fa-solid fa-arrow-right-long text-lg"></i>
                 </a>
-                <a id="studentRegBtn" href="#" target="_blank" class="w-full inline-flex items-center justify-center gap-3 bg-gradient-to-r from-amber-500 via-amber-400 to-amber-500 hover:from-amber-400 text-slate-950 font-black text-base sm:text-lg md:text-xl px-8 py-4 rounded-full shadow-2xl transform hover:scale-105 transition-all border-2 border-white/40 ring-4 ring-amber-400/20">
+                <a id="studentRegBtn" href="#" target="_blank" class="khmer-moul w-full inline-flex items-center justify-center gap-3 bg-gradient-to-r from-amber-500 via-amber-400 to-amber-500 hover:from-amber-400 text-slate-950 font-black text-base sm:text-lg md:text-xl px-8 py-4 rounded-full shadow-2xl transform hover:scale-105 transition-all border-2 border-white/40 ring-4 ring-amber-400/20">
                     <i class="fa-solid fa-user-pen text-3xl"></i>
                     <span>ប្រព័ន្ធចុះឈ្មោះសិស្ស</span>
                     <i class="fa-solid fa-arrow-right-long text-lg"></i>
@@ -217,8 +216,8 @@
             <h3 class="text-xl font-bold mb-1 text-amber-300">ផ្ទៀងផ្ទាត់ពាក្យសម្ងាត់</h3>
             <p class="text-slate-400 text-xs mb-5">សូមបញ្ចូលពាក្យសម្ងាត់ដើម្បីចូលទៅកាន់ការកំណត់</p>
             <form id="passwordForm" class="space-y-4">
-                <input type="password" id="inputPassword" placeholder="បញ្ចូលពាក្យសម្ងាត់" class="w-full bg-slate-800 border border-slate-700 rounded-xl px-4 py-3 text-center text-white text-lg font-bold tracking-widest focus:outline-none focus:border-amber-400">
-                <p id="passwordError" class="text-red-400 text-xs hidden"><i class="fa-solid fa-triangle-exclamation"></i> ពាក្យសម្ងាត់មិនត្រឹមត្រូវទេ!</p>
+                <input type="password" id="inputPassword" placeholder="បញ្ចូលលេខកូដ" class="w-full bg-slate-800 border border-slate-700 rounded-xl px-4 py-3 text-center text-white text-lg font-bold tracking-widest focus:outline-none focus:border-amber-400">
+                <p id="passwordError" class="text-red-400 text-xs hidden"><i class="fa-solid fa-triangle-exclamation"></i> លេខពាក្យសម្ងាត់មិនត្រឹមត្រូវទេ!</p>
                 <div class="flex gap-2 pt-2">
                     <button type="button" id="closePassModalBtn" class="w-1/2 bg-slate-800 hover:bg-slate-700 text-slate-300 py-2.5 rounded-xl text-sm">បោះបង់</button>
                     <button type="submit" class="w-1/2 bg-amber-400 hover:bg-amber-500 text-slate-950 font-bold py-2.5 rounded-xl text-sm shadow-lg">បញ្ជាក់</button>
@@ -259,7 +258,7 @@
                         <div class="border-2 border-dashed border-slate-700 hover:border-amber-400/50 rounded-2xl p-3 text-center cursor-pointer bg-slate-800/50" onclick="document.getElementById('schoolLogoFileInput').click()">
                             <i class="fa-solid fa-cloud-arrow-up text-xl text-amber-400 mb-1"></i>
                             <p class="text-xs text-slate-300">ឬ Upload Logo សាលាពីកុំព្យូទ័រ/ទូរស័ព្ទ</p>
-                            <p class="text-[11px] text-amber-400 font-bold mt-1">⚠️(ទំហំឯកសារត្រូវតូចជាង 1MB)</p>
+                            <p class="text-[11px] text-amber-400 font-bold mt-1">⚠️ (ទំហំឯកសារត្រូវតូចជាង 1MB)</p>
                         </div>
                         <input type="file" id="schoolLogoFileInput" accept="image/*" class="hidden">
                     </div>
@@ -273,7 +272,7 @@
                         <div class="border-2 border-dashed border-slate-700 hover:border-amber-400/50 rounded-2xl p-3 text-center cursor-pointer bg-slate-800/50" onclick="document.getElementById('photoInput').click()">
                             <i class="fa-solid fa-cloud-arrow-up text-xl text-amber-400 mb-1"></i>
                             <p class="text-xs text-slate-300">ឬ Upload រូប Background ពីកុំព្យូទ័រ/ទូរស័ព្ទ</p>
-                            <p class="text-[11px] text-amber-400 font-bold mt-1">⚠️(ទំហំឯកសារត្រូវតូចជាង 1MB)</p>
+                            <p class="text-[11px] text-amber-400 font-bold mt-1">⚠️ (ទំហំឯកសារត្រូវតូចជាង 1MB)</p>
                         </div>
                         <input type="file" id="photoInput" multiple accept="image/*,.gif" class="hidden">
                         <div id="thumbContainer" class="grid grid-cols-4 gap-2 mt-2 max-h-28 overflow-y-auto"></div>
@@ -285,7 +284,7 @@
                         <div class="border-2 border-dashed border-slate-700 hover:border-amber-400/50 rounded-2xl p-3 text-center cursor-pointer bg-slate-800/50" onclick="document.getElementById('musicFileInput').click()">
                             <i class="fa-solid fa-cloud-arrow-up text-xl text-amber-400 mb-1"></i>
                             <p class="text-xs text-slate-300">Upload ឯកសារ MP3 / MP4 ពីទូរស័ព្ទ/កុំព្យូទ័រ</p>
-                            <p class="text-[11px] text-amber-400 font-bold mt-1">⚠️(ទំហំឯកសារត្រូវតូចជាង 1MB)</p>
+                            <p class="text-[11px] text-amber-400 font-bold mt-1">⚠️ (ទំហំឯកសារត្រូវតូចជាង 1MB)</p>
                         </div>
                         <input type="file" id="musicFileInput" accept="audio/*,video/mp4" class="hidden">
                         <div id="musicFileInfo" class="text-[11px] text-amber-400 truncate"></div>
@@ -634,7 +633,7 @@
                     a.href = btn.url || '#';
                     a.target = '_blank';
                     a.className = 'w-full text-left px-4 py-2.5 rounded-xl hover:bg-white/10 text-slate-200 font-medium flex items-center gap-3 transition-all';
-                    a.innerHTML = `<i class="fa-solid fa-graduation-cap text-amber-400"></i><span>${btn.name || 'ប៊ូតុងគ្មានឈ្មោះ'}</span>`;
+                    a.innerHTML = `<i class="fa-solid fa-link text-amber-400"></i><span>${btn.name || 'ប៊ូតុងគ្មានឈ្មោះ'}</span>`;
                     customMenuButtons.appendChild(a);
                 });
             }
@@ -788,7 +787,7 @@
             inputSchoolLogo.value = (config.schoolLogo && !config.schoolLogo.startsWith('data:')) ? config.schoolLogo : '';
             inputSystemUrl.value = config.systemUrl || '';
             inputStudentRegUrl.value = config.studentRegUrl || '';
-            musicFileInfo.textContent = config.musicUrl && config.musicUrl.startsWith('data:') ? "✓ បាន Upload MP3/MP4 រួចរាល់ក្នុងប្រព័ន្ធ" : "";
+            musicFileInfo.textContent = config.musicUrl && config.musicUrl.startsWith('data:') ? "✓ បាន Upload ဖိုင် MP3/MP4 រួចរាល់ក្នុងប្រព័ន្ធ" : "";
             inputNewPassword.value = '';
 
             renderThumbnails();
